@@ -72,3 +72,78 @@
     line-height: 1.6;
     white-space: pre-wrap;
 }
+
+/* Session 折疊 */
+.log-session {
+    background: white;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    overflow: hidden;
+}
+
+.log-session-header {
+    display: flex;
+    align-items: center;
+    padding: 16px 20px;
+    cursor: pointer;
+    user-select: none;
+    gap: 12px;
+}
+
+.log-session-header:hover {
+    background: #f9f9f9;
+}
+
+.log-session-header span:first-child {
+    font-weight: bold;
+    color: #333;
+}
+
+.log-session-time {
+    font-size: 13px;
+    color: #aaa;
+    flex: 1;
+}
+
+.log-toggle-icon {
+    color: #aaa;
+    font-size: 12px;
+}
+
+.btn-continue {
+    padding: 6px 14px;
+    background: #3498db;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.btn-continue:hover {
+    background: #2980b9;
+}
+
+.btn-delete {
+    padding: 6px 14px;
+    background: #fff0f0;
+    color: #e74c3c;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-delete:hover {
+    background: #ffdcdc;
+}
+
+.log-session-body {
+    padding: 0 20px 20px;
+}
+
+.log-session-body.collapsed {
+    display: none;
+}
