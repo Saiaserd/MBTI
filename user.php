@@ -36,11 +36,24 @@
 <?php
 session_start();
 if (isset($_SESSION['user_name'])) {
-    // 如果已經登入，可以顯示歡迎詞和登出連結
+    $name = htmlspecialchars($_SESSION['user_name']);
+    $id   = htmlspecialchars($_SESSION['user_id']);
+    $initial = mb_substr($name, 0, 1, 'UTF-8');
     include 'sidebar.html';
-    echo "<main class='main-content'><h3>歡迎回來，" . $_SESSION['user_name'] . "</h3>";
-    echo "<a href='logout.php'>點我登出</a></main>";
-    exit(); // 停止執行後面的登入表單
+    echo "
+    <main class='main-content'>
+        <div class='profile-card'>
+            <div class='profile-avatar'>$initial</div>
+            <h2 class='profile-name'>$name</h2>
+            <p class='profile-id'>帳號：$id</p>
+            <div class='profile-actions'>
+                <a href='index.php' class='btn-action'>首頁</a>
+                <a href='survey.php' class='btn-action'>測驗</a>
+                <a href='logout.php' class='btn-logout'>登出</a>
+            </div>
+        </div>
+    </main>";
+    exit();
 }
 ?>
 
