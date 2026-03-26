@@ -62,7 +62,7 @@
 
             const mode = modeSelect.value;
             
-            // 清空輸入框
+            // 清空輸入聊天框
             chatInput.value = '';
             
             // 顯示用戶消息
