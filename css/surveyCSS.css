@@ -1,0 +1,61 @@
+/* css/feedbackCSS.css */
+
+.feedback-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+.feedback-card {
+    background: #ffffff;
+    width: 100%;
+    max-width: 600px;
+    padding: 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.feedback-card h2 {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.8rem;
+}
+
+.subtitle {
+    color: #888;
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+}
+
+.question-group {
+    margin-bottom: 25px;
+}
+
+.question-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #444;
+}
+
+/* 評分星星樣式 (倒序排列是為了方便做 Hover 變色) */
+.rating-stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.rating-stars input { display: none; }
+.rating-stars label {
+    font-size: 30px;
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.rating-stars input:checked ~ label,
+.rating-stars label:hover,
+.rating-stars label:hover ~ label {
+    color: #f1c40f; /* 金黃色 */
+}

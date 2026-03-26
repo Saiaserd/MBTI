@@ -1,0 +1,105 @@
+/* 1. 網格容器：設定 4 欄排版 */
+.about-header h1{
+    text-align: center; /* 讓文字水平居中 */
+    margin-top: 20px;
+}
+
+.mbti-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 強制每排 4 個 */
+    gap: 30px; /* 卡片與卡片間的距離 */
+    padding: 20px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* 2. 黃色框框：完整卡片 */
+.mbti-card-NT {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #e08dee;
+    border-radius: 20px;
+    padding: 25px;
+    text-decoration: none; /* 關鍵：移除超連結底線 */
+    color: inherit;       /* 關鍵：繼承原本文字顏色，不變藍 */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.mbti-card-NF {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #69e94f;
+    border-radius: 20px;
+    padding: 25px;
+    text-decoration: none; /* 關鍵：移除超連結底線 */
+    color: inherit;       /* 關鍵：繼承原本文字顏色，不變藍 */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.mbti-card-SJ {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #5dbdf5;
+    border-radius: 20px;
+    padding: 25px;
+    text-decoration: none; /* 關鍵：移除超連結底線 */
+    color: inherit;       /* 關鍵：繼承原本文字顏色，不變藍 */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+.mbti-card-SP {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #eddb38;
+    border-radius: 20px;
+    padding: 25px;
+    text-decoration: none; /* 關鍵：移除超連結底線 */
+    color: inherit;       /* 關鍵：繼承原本文字顏色，不變藍 */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+/* 滑鼠移上去時的整體反饋 */
+.mbti-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    border-color: #3498db;
+}
+
+/* 3. 藍色框框：圖片區域 */
+.mbti-img-box {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 保持正方形 */
+    background-color: #f9f9f9; /* 沒圖時的預設底色 */
+    border-radius: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.mbti-img-box img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+}
+
+/* 4. 綠色字體：名稱區域 */
+.mbti-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #333; /* 確保它是正常的深灰色 */
+    margin-top: 5px;
+}

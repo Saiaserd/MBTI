@@ -1,0 +1,136 @@
+/* 基本重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    display: flex;
+    background-color: #f4f7f6;
+    --sidebar-width: 250px; /* CSS 變數，紀錄側邊欄寬度 */
+}
+
+/* 側邊欄主體 */
+.sidebar {
+    width: 250px; /* 設定固定寬度 */
+    height: 100vh; /* vh 代表可視視窗高度，100vh = 填滿整個螢幕高度 */
+    background-color: #ffffff;  /* 設定背景為白色 */
+    color: rgb(0, 0, 0);
+
+    position: fixed; /* 讓側邊欄固定在左邊，捲動網頁時它也不會動 */
+    left: 0;         /* 將側邊欄釘在左邊 */
+    top: 0;
+
+    display: flex; /* 開啟彈性佈局 */
+    flex-direction: column; /* 讓內容由上往下垂直排列 */
+}
+
+/* 標題區 */
+.sidebar-header {
+    padding: 20px;
+    text-align: center;
+    background-color: #ffffff;
+}
+
+/* 導覽連結列表 */
+.nav-links {
+    list-style: none;
+    margin-top: 20px;
+    flex-grow: 1;
+}
+
+.nav-links li {
+    padding: 5px 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #bdc3c7;
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+/* 滑鼠懸停與選中狀態 */
+.nav-links a:hover {
+    background-color: #d4d4d4;
+    color: #000000;
+}
+
+.nav-links a i {
+    margin-right: 15px;
+    font-size: 1.2rem;
+    width: 25px;
+    text-align: center;
+}
+
+/* 登出按鈕移到底部 */
+.logout {
+    margin-top: auto;
+    margin-bottom: 20px;
+    border-top: 1px solid #3e4f5f;
+    padding-top: 15px !important;
+}
+
+.logout a:hover {
+    color: #e74c3c !important;
+}
+
+/* 主內容區域位移（避開固定側邊欄） */
+.main-content {
+    margin-left: 250px;
+    padding: 30px;
+    width: 100%;
+}
+
+/* --- 側邊欄展開/收起邏輯 --- */
+
+/* 1. 讓動畫平滑 */
+.sidebar {
+    transition: width 0.5s ease;
+    overflow: hidden; /* 防止收縮時內容溢出 */
+}
+
+/* 2. 定義收起狀態的寬度 (通常剛好容納圖標) */
+.sidebar.collapsed {
+    width: 80px;
+    --sidebar-width: 80px; /* 更新 CSS 變數 */
+}
+
+/* 3. 收起時隱藏文字 */
+.sidebar.collapsed span, 
+.sidebar.collapsed h3 span {
+    display: none;
+}
+
+/* 4. 收起時，主內容區要自動往左靠 */
+/* 使用 ~ 選擇器來控制同層級的 main-content */
+.sidebar.collapsed ~ .main-content {
+    margin-left: 80px;
+}
+
+/* 5. 切換按鈕樣式 */
+#toggle-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #333;
+    padding: 5px;
+}
+
+/* 調整 Header 佈局以便容納按鈕 */
+.sidebar-header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* 確保內容區域也有動畫 */
+.main-content {
+    transition: margin-left 0.3s ease;
+}

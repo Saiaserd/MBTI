@@ -1,0 +1,95 @@
+.mbti-detail-container {
+    display: flex;
+    gap: 40px;
+    background: white;
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    margin-top: 20px;
+}
+
+/* 橘色左側：寬度佔 30% */
+.detail-left-section {
+    flex: 0 0 300px; /* 固定寬度 300px */
+    text-align: center;
+}
+
+.mbti-title {
+    font-size: 3rem;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.detail-img-box img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+/* 右側區：寬度佔剩餘空間 */
+.detail-right-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* 綠色框 (八維)：藍色小標籤 */
+.functions-box {
+    border: 2px solid #69e94f;
+    padding: 20px;
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
+
+.functions-grid {
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;                          /* 方塊與方塊的間距 */
+    margin-top: 15px;                   /* 離標題遠一點 */
+    max-width: 500px;
+}
+
+.function-item {
+    background: #5dbdf5; /* 藍色標籤 */
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* 綠色框 (介紹) */
+.description-box {
+    border: 2px solid #69e94f; /* 綠色框 */
+    padding: 20px;
+    border-radius: 15px;
+    line-height: 1.8;
+}
+
+/* 導覽按鈕樣式 */
+.nav-buttons-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    gap: 20px;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #5dbdf5; /* 使用與八維標籤一致的藍色 */
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.nav-button:hover {
+    background-color: #4aabd8;
+    transform: translateY(-2px);
+}
+
+.nav-button:active {
+    transform: translateY(0);
+}

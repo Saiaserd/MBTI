@@ -1,0 +1,66 @@
+.about-header h1{
+    text-align: center; /* 讓文字水平居中 */
+    margin-top: 20px;
+}
+
+/* 整體容器 */
+.grid-container {
+    display: grid;
+    /* 電腦版排成兩列 (Ti Te Si Se 為第一列...)，或是四組垂直排列 */
+    grid-template-columns: repeat(1, 1fr); 
+    gap: 50px;
+    padding: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* 每一對功能的容器 */
+.function-pair {
+    display: flex;
+    gap: 15px;
+}
+
+/* 個別卡片樣式 */
+/* 修改 .card 樣式 */
+.card {
+    flex: 1;
+    padding: 25px 15px;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 5px solid #ccc;
+    
+    /* 新增以下屬性清除連結預設樣式 */
+    text-decoration: none; /* 移除下劃線 */
+    color: inherit;        /* 繼承原本文字顏色，防止變藍色 */
+    display: block;        /* 確保整塊區域都可點擊 */
+}
+
+/* 滑鼠懸停效果增加陰影感 */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    background-color: #ffffff; /* 稍微變亮 */
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.card p {
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+
+
+/* 為不同功能組別上色 (讓視覺更容易區分) */
+.ti, .te { border-top-color: #3498db; } /* 藍色系：思考 */
+.si, .se { border-top-color: #2ecc71; } /* 綠色系：實感 */
+.ni, .ne { border-top-color: #9b59b6; } /* 紫色系：直覺 */
+.fi, .fe { border-top-color: #e74c3c; } /* 紅色系：情感 */

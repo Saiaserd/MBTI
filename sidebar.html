@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="css/sidebarCSS.css">
+
+
+<nav class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <h3><i class="fas fa-code"></i> <span>MBTI</span></h3>
+        <button id="toggle-btn"><i class="fas fa-bars"></i></button> <!-- 展開或收起欄 -->
+    </div>
+
+    <ul class="nav-links">
+        <li>
+            <a href="chat.php"> <!-- 主頁 -->
+                <i class="user-icon">🔧</i>
+                <span>AI聊天</span>
+            </a>
+        </li>
+        <li>
+            <a href="index.php"> <!-- 主頁 -->
+                <i class="user-icon">🗞️</i>
+                <span>八維介紹</span>
+            </a>
+        </li>
+        <li>
+            <a href="wiki.php"> <!-- 主頁 -->
+                <i class="user-icon">📖</i>
+                <span>基礎介紹</span>
+            </a>
+        </li>
+        <li>
+            <a href="seizure.php"> <!-- 封存頁面 -->
+                <i class="user-icon">📚</i>
+                <span>榮格介紹</span>
+            </a>
+        </li>
+        <li>
+            <a href="log.php"> <!-- 歷史頁面 -->
+                <i class="user-icon">⌛</i>
+                <span>紀錄</span>
+            </a>
+        </li>
+        <li>
+            <a href="user.php"> <!-- 使用者帳號管理 -->
+                <i class="user-icon">👤</i>
+                <span>帳號</span>
+            </a>
+        </li>
+        <li>
+            <a href="survey.php"> <!-- 問卷頁面 -->
+                <i class="user-icon">🧾</i>
+                <span>問卷</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+<script>
+    const sidebar = document.getElementById('sidebar');
+    const btn = document.getElementById('toggle-btn');
+    
+    btn.onclick = function() {
+        sidebar.classList.toggle('collapsed');
+    };
+</script>
