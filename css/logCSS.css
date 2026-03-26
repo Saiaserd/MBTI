@@ -1,0 +1,74 @@
+.main-content {
+    margin-left: 250px;
+    padding: 40px;
+    background-color: #f4f7f9;
+    min-height: 100vh;
+}
+
+.log-container {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.log-container h2 {
+    margin-bottom: 24px;
+    color: #333;
+}
+
+.log-hint {
+    color: #999;
+}
+
+.log-hint a {
+    color: #3498db;
+}
+
+.log-entry {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+
+.log-time {
+    font-size: 12px;
+    color: #aaa;
+    margin-bottom: 12px;
+}
+
+.log-bubble {
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.log-bubble span {
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.log-user {
+    background: #f0f7ff;
+}
+
+.log-user span {
+    color: #3498db;
+}
+
+.log-ai {
+    background: #f5f5f5;
+}
+
+.log-ai span {
+    color: #888;
+}
+
+.log-bubble p {
+    margin: 0;
+    color: #333;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}

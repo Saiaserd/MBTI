@@ -127,6 +127,13 @@
                     // 取得 AI 的回應
                     const aiResponse = data.candidates[0].content.parts[0].text;
                     displayMessage(aiResponse, 'ai');
+
+                    // 儲存對話紀錄
+                    fetch('save_log.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ user_message: userMessage, ai_response: aiResponse })
+                    });
                 } else {
                     displayMessage('❌ 無法取得回應，請稍後重試', 'error');
                 }
