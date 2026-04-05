@@ -18,24 +18,29 @@
 
     <div class="grid-container">
     <div class="function-pair">
-        <a href="ti.php" class="card ti"><h3>Ti</h3><p>內向思考</p></a>
-        <a href="te.php" class="card te"><h3>Te</h3><p>外向思考</p></a>
+        <a href="javascript:void(0)" class="card ti" data-type="Ti"><h3>Ti</h3><p>內向思考</p></a>
+        <a href="javascript:void(0)" class="card te" data-type="Te"><h3>Te</h3><p>外向思考</p></a>
     </div>
 
     <div class="function-pair">
-        <a href="si.php" class="card si"><h3>Si</h3><p>內向實感</p></a>
-        <a href="se.php" class="card se"><h3>Se</h3><p>外向實感</p></a>
+        <a href="javascript:void(0)" class="card si" data-type="Si"><h3>Si</h3><p>內向實感</p></a>
+        <a href="javascript:void(0)" class="card se" data-type="Se"><h3>Se</h3><p>外向實感</p></a>
     </div>
 
     <div class="function-pair">
-        <a href="ni.php" class="card ni"><h3>Ni</h3><p>內向直覺</p></a>
-        <a href="ne.php" class="card ne"><h3>Ne</h3><p>外向直覺</p></a>
+        <a href="javascript:void(0)" class="card ni" data-type="Ni"><h3>Ni</h3><p>內向直覺</p></a>
+        <a href="javascript:void(0)" class="card ne" data-type="Ne"><h3>Ne</h3><p>外向直覺</p></a>
     </div>
 
     <div class="function-pair">
-        <a href="fi.php" class="card fi"><h3>Fi</h3><p>內向情感</p></a>
-        <a href="fe.php" class="card fe"><h3>Fe</h3><p>外向情感</p></a>
+        <a href="javascript:void(0)" class="card fi" data-type="Fi"><h3>Fi</h3><p>內向情感</p></a>
+        <a href="javascript:void(0)" class="card fe" data-type="Fe"><h3>Fe</h3><p>外向情感</p></a>
     </div>
+</div>
+
+<div id="function-info-box" style="display: none; margin: 40px auto; max-width: 800px; padding: 25px; background: #fff; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-left: 8px solid #007bff;">
+    <h2 id="info-title" style="margin-top: 0; color: #333;"></h2>
+    <p id="info-content" style="line-height: 1.8; color: #555; font-size: 1.1em;"></p>
 </div>
 </main>
 
