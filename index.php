@@ -90,6 +90,41 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+    
+    // 1. 新增：八維功能的顏色對照表 (要跟你的卡片上色 CSS 差不多)
+    const colorMap = {
+        "Ti": "#3498db", // 藍色系
+        "Te": "#3498db",
+        "Si": "#2ecc71", // 綠色系
+        "Se": "#2ecc71",
+        "Ni": "#9b59b6", // 紫色系
+        "Ne": "#9b59b6",
+        "Fi": "#e74c3c", // 紅色系
+        "Fe": "#e74c3c"
+    };
+
+    const modal = document.getElementById('function-modal');
+    const modalTitle = document.getElementById('modal-title');
+    const modalContent = document.getElementById('modal-content');
+    // 2. 新增：抓取這個說明框框
+    const modalDescBox = document.getElementById('modal-desc-box'); 
+    const closeBtn = document.querySelector('.close-modal');
+
+    document.querySelectorAll('.card').forEach(card => {
+        card.addEventListener('click', function() {
+            const type = this.getAttribute('data-type');
+            if (introData[type]) {
+                modalTitle.innerText = type;
+                modalContent.innerText = introData[type];
+                
+                // 3. 修改：動態更換標題和說明框的左側邊框顏色
+                modalTitle.style.color = colorMap[type]; // 標題 (Ni) 變色
+                modalDescBox.style.borderLeftColor = colorMap[type]; // 說明框左邊框變色
+
+                modal.style.display = 'flex'; 
+            }
+        });
+    });
 
     // 點擊 X 關閉
     closeBtn.addEventListener('click', () => {
