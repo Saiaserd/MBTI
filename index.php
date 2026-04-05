@@ -91,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
     
-    // 1. 新增：八維功能的顏色對照表 (要跟你的卡片上色 CSS 差不多)
+    // 1. 新增：八維功能的顏色
     const colorMap = {
         "Ti": "#3498db", // 藍色系
         "Te": "#3498db",
