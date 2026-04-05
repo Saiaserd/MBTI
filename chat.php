@@ -29,7 +29,9 @@ if (!empty($_GET['session_id']) && isset($_SESSION['user_id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>聊天主頁</title>
     <link rel="stylesheet" href="css/sidebarCSS.css">
-    <link rel="stylesheet" href="css/chatCSS.css">
+    <link rel="stylesheet" href="css/chatCSS.css?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dompurify/dist/purify.min.js"></script>
 </head>
 <body>
 
@@ -128,7 +130,7 @@ if (!empty($_GET['session_id']) && isset($_SESSION['user_id'])) {
 
             const loadingDiv = document.createElement('div');
             loadingDiv.className = 'message message-ai message-loading';
-            loadingDiv.innerHTML = '<p><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></p>';
+            loadingDiv.innerHTML = '<div class="bubble bubble-ai"><span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span></div>';
             chatMessages.appendChild(loadingDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
 
@@ -143,7 +145,10 @@ if (!empty($_GET['session_id']) && isset($_SESSION['user_id'])) {
                 loadingDiv.remove();
 
                 if (data.error) {
-                    displayMessage('❌ 錯誤: ' + data.error, 'error');
+                    const errMsg = typeof data.error === 'object'
+                        ? (data.error.message || JSON.stringify(data.error))
+                        : data.error;
+                    displayMessage('❌ 錯誤: ' + errMsg, 'error');
                     // 錯誤時把剛加入的使用者訊息移除，讓使用者可以重試
                     conversationHistory.pop();
                 } else if (data.candidates && data.candidates[0]?.content?.parts[0]?.text) {
@@ -181,18 +186,38 @@ if (!empty($_GET['session_id']) && isset($_SESSION['user_id'])) {
             }
         }
 
+        // 設定 marked 選項
+        marked.setOptions({
+            breaks: true,      // 換行符轉 <br>
+            gfm: true,         // GitHub Flavored Markdown
+        });
+
         function displayMessage(message, sender) {
             const messageDiv = document.createElement('div');
             messageDiv.className = `message message-${sender}`;
-            messageDiv.innerHTML = `<p>${escapeHtml(message)}</p>`;
+
+            if (sender === 'ai') {
+                // AI 訊息：解析 Markdown 並消毒
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble bubble-ai markdown-body';
+                bubble.innerHTML = DOMPurify.sanitize(marked.parse(message));
+                messageDiv.appendChild(bubble);
+            } else if (sender === 'user') {
+                // 使用者訊息：純文字，防止 XSS
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble bubble-user';
+                bubble.textContent = message;
+                messageDiv.appendChild(bubble);
+            } else {
+                // 錯誤訊息
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble bubble-error';
+                bubble.textContent = message;
+                messageDiv.appendChild(bubble);
+            }
+
             chatMessages.appendChild(messageDiv);
             chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
         }
     </script>
 
