@@ -51,7 +51,7 @@
             </div>
 
             <div class="modal-right-section">
-                <div class="intro-text-box">
+                <div id="modal-desc-box" class="intro-text-box">
                     <h3>功能詳解</h3>
                     <p id="modal-content"></p>
                 </div>
@@ -63,6 +63,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. 資料庫與顏色對照
     const introData = {
         "Ti": "內向思考 (Ti)：追求邏輯的精確性。這類人喜歡拆解事物，了解其內在運作原理。",
         "Te": "外向思考 (Te)：強調效率、結果與客觀事實。擅長組織外部環境，制定計畫。",
@@ -74,64 +75,48 @@ document.addEventListener('DOMContentLoaded', () => {
         "Fe": "外向情感 (Fe)：強調群體和諧與他人情緒。擅長建立連結。"
     };
 
-    const modal = document.getElementById('function-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalContent = document.getElementById('modal-content');
-    const closeBtn = document.querySelector('.close-modal');
-
-    // 點擊卡片開啟彈窗
-    document.querySelectorAll('.card').forEach(card => {
-        card.addEventListener('click', function() {
-            const type = this.getAttribute('data-type');
-            if (introData[type]) {
-                modalTitle.innerText = type;
-                modalContent.innerText = introData[type];
-                modal.style.display = 'flex'; // 顯示彈窗
-            }
-        });
-    });
-    
-    // 1. 新增：八維功能的顏色
     const colorMap = {
-        "Ti": "#3498db", // 藍色系
-        "Te": "#3498db",
-        "Si": "#2ecc71", // 綠色系
-        "Se": "#2ecc71",
-        "Ni": "#9b59b6", // 紫色系
-        "Ne": "#9b59b6",
-        "Fi": "#e74c3c", // 紅色系
-        "Fe": "#e74c3c"
+        "Ti": "#3498db", "Te": "#3498db",
+        "Si": "#2ecc71", "Se": "#2ecc71",
+        "Ni": "#9b59b6", "Ne": "#9b59b6",
+        "Fi": "#e74c3c", "Fe": "#e74c3c"
     };
 
+    // 2. 抓取彈窗相關 DOM 元素
     const modal = document.getElementById('function-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalContent = document.getElementById('modal-content');
-    // 2. 新增：抓取這個說明框框
     const modalDescBox = document.getElementById('modal-desc-box'); 
     const closeBtn = document.querySelector('.close-modal');
 
+    // 3. 點擊卡片開啟彈窗邏輯
     document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', function() {
             const type = this.getAttribute('data-type');
             if (introData[type]) {
+                // 填入文字與變換顏色
                 modalTitle.innerText = type;
                 modalContent.innerText = introData[type];
                 
-                // 3. 修改：動態更換標題和說明框的左側邊框顏色
-                modalTitle.style.color = colorMap[type]; // 標題 (Ni) 變色
-                modalDescBox.style.borderLeftColor = colorMap[type]; // 說明框左邊框變色
+                const themeColor = colorMap[type];
+                modalTitle.style.color = themeColor;
+                if (modalDescBox) {
+                    modalDescBox.style.borderLeftColor = themeColor;
+                }
 
+                // 顯示彈窗
                 modal.style.display = 'flex'; 
             }
         });
     });
 
-    // 點擊 X 關閉
-    closeBtn.addEventListener('click', () => {
-        modal.style.display = 'none';
-    });
+    // 4. 關閉彈窗邏輯
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    }
 
-    // 點擊背景空白處關閉
     window.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.style.display = 'none';
