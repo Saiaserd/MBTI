@@ -90,6 +90,12 @@
     animation: popUp 0.3s ease-out;
 }
 
+#modal-content {
+    white-space: pre-line; /* 讓 JavaScript 中的 \n 換行符號生效 */
+    line-height: 1.6;      /* 稍微加寬行高，閱讀更舒適 */
+    text-align: left;      /* 列表式內容建議靠左對齊 */
+}
+
 /* 關閉按鈕 */
 .close-modal {
     position: absolute;
