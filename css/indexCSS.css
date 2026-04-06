@@ -96,6 +96,16 @@
     text-align: left;      /* 列表式內容建議靠左對齊 */
 }
 
+/* 讓彈窗內部的文字方塊在內容多時可以捲動 */
+.intro-text-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 6px solid #3498db;
+    max-height: 400px; /* 新增高度限制 */
+    overflow-y: auto;  /* 新增垂直捲軸 */
+}
+
 /* 關閉按鈕 */
 .close-modal {
     position: absolute;
