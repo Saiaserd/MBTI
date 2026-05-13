@@ -1,3 +1,11 @@
+/**
+ * 八維介紹頁邏輯
+ * 點卡片 → 在 modal 顯示對應八維的詳細介紹（8 維 × 在 1~8 位的表現）。
+ *
+ * introData：每維的介紹文字。用反引號（template literal）多行字串保留換行。
+ * colorMap：每維對應的主題色（同一組功能配同色，例如 Ti/Te 都是藍色）。
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
     const introData = {
         "Ti": `• Ti在1位（ISTP/INTP）：核心功能，追尋邏輯自洽與原理精準，習慣獨立拆解分析，思維冷靜客觀，凡事以內在邏輯體系為判斷標準。
@@ -80,12 +88,14 @@ document.addEventListener('DOMContentLoaded', () => {
         "Fi": "#e74c3c", "Fe": "#e74c3c"
     };
 
+    // Modal 相關元素（modal 結構在 views/index.view.php）
     const modal = document.getElementById('function-modal');
     const modalTitle = document.getElementById('modal-title');
     const modalContent = document.getElementById('modal-content');
     const modalDescBox = document.getElementById('modal-desc-box');
     const closeBtn = document.querySelector('.close-modal');
 
+    // 點任何一張卡片 → 開 modal 並依 data-type 換內容
     document.querySelectorAll('.card').forEach(card => {
         card.addEventListener('click', function () {
             const type = this.getAttribute('data-type');
@@ -93,6 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalTitle.innerText = type;
                 modalContent.innerText = introData[type];
 
+                // 標題顏色 + 描述框左邊框都套主題色
                 const themeColor = colorMap[type];
                 modalTitle.style.color = themeColor;
                 if (modalDescBox) {
@@ -103,11 +114,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // 關閉 modal 的兩種方式：點 × 或點黑色背景
     if (closeBtn) {
         closeBtn.addEventListener('click', () => { modal.style.display = 'none'; });
     }
-
     window.addEventListener('click', (e) => {
+        // e.target === modal 表示點到的是黑色背景本身，不是 modal 內容
         if (e.target === modal) { modal.style.display = 'none'; }
     });
 });

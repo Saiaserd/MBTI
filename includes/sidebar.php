@@ -1,8 +1,17 @@
+<?php
+/**
+ * 側邊欄
+ * 由 header.php 自動載入，不用每個頁面手動 include。
+ * 想改選單項目（新增頁面、改文字、改 emoji）就改下面的 <ul>。
+ * 收合按鈕的 JS 邏輯在 assets/js/sidebar.js。
+ */
+?>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <nav class="sidebar" id="sidebar">
     <div class="sidebar-header">
         <h3><i class="fas fa-code"></i> <span>MBTI</span></h3>
+        <!-- 點這個按鈕會 toggle .collapsed 來收合側邊欄 -->
         <button id="toggle-btn"><i class="fas fa-bars"></i></button>
     </div>
 
