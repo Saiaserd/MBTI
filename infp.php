@@ -1,55 +1,8 @@
-<!DOCTYPE html>
-<html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>INFP</title>
-    <link rel="stylesheet" href="css/sidebarCSS.css">
-    <link rel="stylesheet" href="css/wikimbtiCSS.css">
-</head>
-<body>
-
-    <?php include 'sidebar.html'; ?>
-
-    <main class="main-content">
-    <div class="mbti-detail-container">
-        
-        <div class="detail-left-section">
-            <h1 class="mbti-title">INFP</h1> <div class="detail-img-box">
-                <img src="images/infp.jpg" alt="INFP"> </div>
-        </div>
-
-        <div class="detail-right-section">
-            <div class="functions-box">
-                <h3>榮格八維</h3>
-                <div class="functions-grid">
-                    <div class="function-item">Fi</div>
-                    <div class="function-item">Ne</div>
-                    <div class="function-item">Si</div>
-                    <div class="function-item">Te</div>
-                    <div class="function-item">Fe</div>
-                    <div class="function-item">Ni</div>
-                    <div class="function-item">Se</div>
-                    <div class="function-item">Ti</div>
-                </div>
-            </div>
-
-            <div class="description-box">
-                <h3>人格介紹</h3>
-                <p>
-                    恁蝶，愛擺爛，拖延症，想法幼稚，愛哭，特別多愁善感，內耗，脆弱又敏感，沒有解決問題的能力。
-                </p>
-            </div>
-        </div>
-
-    </div>
-    <!--框框內容END-->
-
-    <div class="nav-buttons-container">
-        <a href="infj.php" class="nav-button">← 上一個 (INFJ)</a>
-        <a href="enfj.php" class="nav-button">下一個 (ENFJ) →</a>
-    </div>
-</main>
-
-</body>
-</html>
+<?php
+$type = 'infp';
+$page_title = strtoupper($type);
+$page_css = ['assets/css/wikimbtiCSS.css'];
+require __DIR__ . '/includes/bootstrap.php';
+require __DIR__ . '/includes/header.php';
+require __DIR__ . '/views/mbti.view.php';
+require __DIR__ . '/includes/footer.php';

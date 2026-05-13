@@ -1,8 +1,10 @@
 <?php
-session_start();
-require_once 'db.php';
+require_once __DIR__ . '/../includes/bootstrap.php';
+require_once __DIR__ . '/../includes/db.php';
 
-if (!isset($_SESSION['user_id'])) {
+header('Content-Type: application/json; charset=UTF-8');
+
+if (!is_logged_in()) {
     http_response_code(401);
     echo json_encode(["error" => "未登入"]);
     exit;
@@ -15,7 +17,7 @@ if (!$data || empty($data['session_id']) || empty($data['user_message']) || empt
     exit;
 }
 
-$user_id      = $_SESSION['user_id'];
+$user_id      = current_user_id();
 $session_id   = $data['session_id'];
 $user_message = $data['user_message'];
 $ai_response  = $data['ai_response'];
@@ -25,5 +27,5 @@ $stmt->bind_param("ssss", $user_id, $session_id, $user_message, $ai_response);
 $stmt->execute();
 
 echo json_encode(["success" => true]);
-require_once 'close.php';
-?>
+
+require_once __DIR__ . '/../includes/close.php';
