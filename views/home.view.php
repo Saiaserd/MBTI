@@ -10,5 +10,6 @@
 </div>
 
 <div class="cta-section">
-    <a href="chat.php" class="cta-btn">前往 AI 聊天</a>
+    <a href="assessment.php" class="cta-btn">開始八維測驗</a>
+    <p class="cta-sub">先做完 70 題測驗，得到你的認知功能報告後，再帶著報告去和 AI 對話，像看健康報告問醫生一樣得到專屬於你的解讀。</p>
 </div>

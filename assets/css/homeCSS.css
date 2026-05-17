@@ -46,3 +46,11 @@
 .cta-btn:hover {
     background: #8e55a8;
 }
+
+.cta-sub {
+    max-width: 560px;
+    margin: 18px auto 0;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.7;
+}

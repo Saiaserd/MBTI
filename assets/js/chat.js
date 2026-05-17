@@ -12,7 +12,8 @@ const sendBtn     = document.getElementById('sendBtn');
 const chatMessages = document.getElementById('chatMessages');
 const modeSelect  = document.getElementById('modeSelect');
 
-const chatSessionId = window.CHAT_BOOT.sessionId;
+const chatSessionId  = window.CHAT_BOOT.sessionId;
+const assessmentId   = window.CHAT_BOOT.assessmentId || null; // 訪客 / 舊資料為 null
 
 // Gemini API 要求的對話歷史格式：[{role: 'user'|'model', parts: [{text}]}, ...]
 // 每次送請求都會把整個歷史傳過去，AI 才會記得前面說過的話
@@ -20,6 +21,10 @@ const conversationHistory = [];
 
 // 如果是從紀錄頁點「繼續對話」進來，把舊訊息塞進畫面跟歷史
 if (window.CHAT_BOOT.isContinue && Array.isArray(window.CHAT_BOOT.history)) {
+    // 把預設的歡迎語藏掉，避免「歡迎...」浮在舊對話上面看起來很怪
+    const welcome = chatMessages.querySelector('.message-welcome');
+    if (welcome) welcome.style.display = 'none';
+
     window.CHAT_BOOT.history.forEach(function (row) {
         displayMessage(row.user_message, 'user');
         displayMessage(row.ai_response, 'ai');
@@ -104,13 +109,15 @@ async function sendMessage() {
             });
 
             // 同步把這輪對話存進資料庫（不等回應）
+            // 帶 assessment_id 讓紀錄頁可以按報告分組
             fetch('api/save_log.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
-                    session_id: chatSessionId,
-                    user_message: userMessage,
-                    ai_response: aiResponse
+                    session_id:    chatSessionId,
+                    assessment_id: assessmentId,
+                    user_message:  userMessage,
+                    ai_response:   aiResponse
                 })
             });
         } else {

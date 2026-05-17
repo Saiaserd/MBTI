@@ -25,13 +25,21 @@ if (!$data || empty($data['session_id']) || empty($data['user_message']) || empt
     exit;
 }
 
-$user_id      = current_user_id();
-$session_id   = $data['session_id'];   // 同一次對話有同一個 session_id，用來區分不同對話串
-$user_message = $data['user_message'];
-$ai_response  = $data['ai_response'];
+$user_id       = current_user_id();
+$session_id    = $data['session_id'];   // 同一次對話有同一個 session_id，用來區分不同對話串
+$user_message  = $data['user_message'];
+$ai_response   = $data['ai_response'];
+// 把對話綁到當下使用者看的測驗報告上，紀錄頁才能按報告分組
+// 訪客在登入前若有舊狀態 / 前端沒傳 → NULL
+$assessment_id = isset($data['assessment_id']) && $data['assessment_id'] !== null
+    ? (int)$data['assessment_id']
+    : null;
 
-$stmt = $conn->prepare("INSERT INTO chat_logs (user_id, session_id, user_message, ai_response) VALUES (?, ?, ?, ?)");
-$stmt->bind_param("ssss", $user_id, $session_id, $user_message, $ai_response);
+$stmt = $conn->prepare(
+    "INSERT INTO chat_logs (user_id, session_id, assessment_id, user_message, ai_response)
+     VALUES (?, ?, ?, ?, ?)"
+);
+$stmt->bind_param("ssiss", $user_id, $session_id, $assessment_id, $user_message, $ai_response);
 $stmt->execute();
 
 echo json_encode(["success" => true]);
