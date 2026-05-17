@@ -4,9 +4,7 @@
     margin-bottom: 25px !important;
 }
 
-/* 確保主內容區域不會被側邊欄擋住 */
 .main-content {
-    margin-left: 250px; /* 這裡要根據你 sidebar 的寬度調整，通常是 250px-280px */
     padding: 40px;
     background-color: #f4f7f9;
     min-height: 100vh;

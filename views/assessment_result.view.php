@@ -1,6 +1,6 @@
 <?php
 /**
- * 結果報告 + AI 聊天合併模板（2026-05-16 改版）
+ * 結果報告 + AI 聊天合併模板（2026-05-17 改版）
  *
  *  需要的變數：
  *    $assessment       → 8 維報告（從 $_SESSION 來）
@@ -9,7 +9,9 @@
  *    $loaded_history   → 固定空陣列
  *
  *  視覺結構：
- *    [Hero 類型卡] → [8 維長條] → [功能堆疊四卡] → [AI 聊天區]
+ *    [左欄：類型卡 + 8 維分數]  [右欄：認知功能介紹]
+ *    ─────────────────────────────────────────
+ *    [AI 聊天區（全寬）]
  *    使用者由上往下滾，自然走完「看報告 → 找 AI 諮詢」的動線。
  */
 
@@ -37,68 +39,75 @@ $scores = $assessment['scores'];
 $stack  = $assessment['stack'];
 $type   = $assessment['type'];
 
-$sorted = $scores;
-arsort($sorted);
-
 $is_guest = empty($_SESSION['user_id']);
 ?>
 
 <div class="result-container">
-    <!-- ────── 頂部類型卡 ────── -->
-    <header class="result-hero">
-        <p class="hero-eyebrow">你的人格類型</p>
-        <h1 class="hero-type"><?= htmlspecialchars($type) ?></h1>
-        <p class="hero-desc"><?= htmlspecialchars($assessment['desc']) ?></p>
-        <p class="hero-time">測驗時間：<?= htmlspecialchars($assessment['created_at']) ?></p>
-        <a href="#chat" class="hero-jump">跳到 AI 諮詢 ↓</a>
-    </header>
+    <!-- ────── 報告主體：左欄(類型+分數) + 右欄(功能介紹) ────── -->
+    <div class="result-layout">
+        <div class="result-left">
+            <!-- 人格標籤（類型卡） -->
+            <header class="result-hero">
+                <p class="hero-eyebrow">你的人格類型</p>
+                <h1 class="hero-type"><?= htmlspecialchars($type) ?></h1>
+                <p class="hero-desc"><?= htmlspecialchars($assessment['desc']) ?></p>
+                <p class="hero-time">測驗時間：<?= htmlspecialchars($assessment['created_at']) ?></p>
+                <a href="#chat" class="hero-jump">跳到 AI 諮詢 ↓</a>
+            </header>
 
-    <!-- ────── 8 維分數長條 ────── -->
-    <section class="score-section">
-        <h2>八維認知功能分數</h2>
-        <p class="section-hint">分數越高代表該功能在你身上越明顯（0~100，依本次測驗的填答計算）。</p>
-        <div class="score-list">
-            <?php foreach ($sorted as $fn => $score):
-                $meta = $fn_meta[$fn];
-            ?>
-                <div class="score-row">
-                    <div class="score-label">
-                        <span class="fn-code" style="background:<?= $meta['color'] ?>"><?= $fn ?></span>
-                        <span class="fn-name"><?= $meta['name'] ?></span>
-                    </div>
-                    <div class="score-bar-wrap">
-                        <div class="score-bar"
-                             style="width:<?= $score ?>%; background:<?= $meta['color'] ?>;"></div>
-                    </div>
-                    <div class="score-value"><?= $score ?></div>
+            <!-- 8 維分數長條：依人格認知功能順序（$stack 1~8 位）排列 -->
+            <section class="score-section">
+                <h2>八維認知功能分數</h2>
+                <p class="section-hint">由你的人格 1~8 位順序排列，數字為本次填答計算後的分數（0~100）。</p>
+                <div class="score-list">
+                    <?php foreach ($stack as $i => $fn):
+                        $meta  = $fn_meta[$fn] ?? null;
+                        $score = $scores[$fn] ?? 0;
+                        if (!$meta) continue;
+                    ?>
+                        <div class="score-row">
+                            <div class="score-label">
+                                <span class="fn-rank">第 <?= $i + 1 ?> 位</span>
+                                <span class="fn-code" style="background:<?= $meta['color'] ?>"><?= $fn ?></span>
+                                <span class="fn-name"><?= $meta['name'] ?></span>
+                            </div>
+                            <div class="score-bar-wrap">
+                                <div class="score-bar"
+                                     style="width:<?= $score ?>%; background:<?= $meta['color'] ?>;"></div>
+                            </div>
+                            <div class="score-value"><?= $score ?></div>
+                        </div>
+                    <?php endforeach; ?>
                 </div>
-            <?php endforeach; ?>
+            </section>
         </div>
-    </section>
 
-    <!-- ────── 你的功能堆疊（前 4 位的角色） ────── -->
-    <section class="stack-section">
-        <h2>你的功能堆疊（前四位）</h2>
-        <p class="section-hint">榮格八維理論認為，前四個功能形成「四面體」，定義了你性格的核心運作方式。</p>
-        <div class="stack-grid">
-            <?php for ($i = 0; $i < 4; $i++):
-                $fn   = $stack[$i] ?? null;
-                if (!$fn) continue;
-                $meta = $fn_meta[$fn];
-                $role = $stack_roles[$i];
-            ?>
-                <article class="stack-card" style="border-top: 4px solid <?= $meta['color'] ?>;">
-                    <header class="stack-card-head">
-                        <span class="stack-pos">第 <?= $i + 1 ?> 位</span>
-                        <span class="stack-fn" style="color: <?= $meta['color'] ?>"><?= $fn ?></span>
-                    </header>
-                    <h3 class="stack-role"><?= htmlspecialchars($role['label']) ?></h3>
-                    <p class="stack-fn-name"><?= htmlspecialchars($meta['name']) ?></p>
-                    <p class="stack-note"><?= htmlspecialchars($role['note']) ?></p>
-                </article>
-            <?php endfor; ?>
-        </div>
-    </section>
+        <!-- 右欄：認知功能介紹（前四位的角色說明） -->
+        <aside class="result-right">
+            <section class="stack-section">
+                <h2>認知功能介紹</h2>
+                <p class="section-hint">榮格八維理論認為，前四個功能形成「四面體」，定義了你性格的核心運作方式。</p>
+                <div class="stack-list">
+                    <?php for ($i = 0; $i < 4; $i++):
+                        $fn = $stack[$i] ?? null;
+                        if (!$fn) continue;
+                        $meta = $fn_meta[$fn];
+                        $role = $stack_roles[$i];
+                    ?>
+                        <article class="stack-card" style="border-left: 4px solid <?= $meta['color'] ?>;">
+                            <header class="stack-card-head">
+                                <span class="stack-pos">第 <?= $i + 1 ?> 位</span>
+                                <span class="stack-fn" style="color: <?= $meta['color'] ?>"><?= $fn ?></span>
+                            </header>
+                            <h3 class="stack-role"><?= htmlspecialchars($role['label']) ?></h3>
+                            <p class="stack-fn-name"><?= htmlspecialchars($meta['name']) ?></p>
+                            <p class="stack-note"><?= htmlspecialchars($role['note']) ?></p>
+                        </article>
+                    <?php endfor; ?>
+                </div>
+            </section>
+        </aside>
+    </div>
 
     <!-- ────── AI 聊天區（取代原本獨立的 chat.php） ────── -->
     <section class="chat-section" id="chat">
@@ -131,11 +140,6 @@ $is_guest = empty($_SESSION['user_id']);
             <div class="input-box-wrapper">
                 <textarea class="chat-input" id="chatInput" placeholder="輸入你想諮詢的問題……" rows="1"></textarea>
                 <div class="input-actions">
-                    <select class="mode-select" id="modeSelect">
-                        <option value="default">選擇模式</option>
-                        <option value="analysis">深度分析</option>
-                        <option value="casual">隨意聊天</option>
-                    </select>
                     <button class="send-btn" id="sendBtn">
                         <svg viewBox="0 0 24 24" width="20" height="20">
                             <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>

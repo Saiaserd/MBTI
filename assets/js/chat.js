@@ -10,7 +10,6 @@
 const chatInput   = document.getElementById('chatInput');
 const sendBtn     = document.getElementById('sendBtn');
 const chatMessages = document.getElementById('chatMessages');
-const modeSelect  = document.getElementById('modeSelect');
 
 const chatSessionId  = window.CHAT_BOOT.sessionId;
 const assessmentId   = window.CHAT_BOOT.assessmentId || null; // 訪客 / 舊資料為 null
@@ -46,7 +45,6 @@ async function sendMessage() {
     const userMessage = chatInput.value.trim();
     if (!userMessage) return;
 
-    const mode = modeSelect.value;
     chatInput.value = '';
     displayMessage(userMessage, 'user');
     sendBtn.disabled = true; // 等回應期間不能再按
@@ -57,20 +55,7 @@ async function sendMessage() {
         parts: [{ text: userMessage }]
     });
 
-    // 如果使用者第一句話有選模式，加上對應提示給 AI
-    // 用展開運算子複製陣列，避免改到原本的 conversationHistory
-    let contentsToSend = [...conversationHistory];
-    if (mode === 'analysis' && conversationHistory.length === 1) {
-        contentsToSend[0] = {
-            role: 'user',
-            parts: [{ text: '請進行深度分析。' }, { text: userMessage }]
-        };
-    } else if (mode === 'casual' && conversationHistory.length === 1) {
-        contentsToSend[0] = {
-            role: 'user',
-            parts: [{ text: '請以輕鬆的語氣回答。' }, { text: userMessage }]
-        };
-    }
+    const contentsToSend = [...conversationHistory];
 
     // 顯示「正在輸入」的三個跳動點點
     const loadingDiv = document.createElement('div');

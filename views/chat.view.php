@@ -17,15 +17,10 @@
         </div>
     </div>
 
-    <!-- 輸入區：textarea + 模式選擇 + 送出鈕 -->
+    <!-- 輸入區：textarea + 送出鈕 -->
     <div class="input-box-wrapper">
         <textarea class="chat-input" id="chatInput" placeholder="請輸入MBTI......" rows="1"></textarea>
         <div class="input-actions">
-            <select class="mode-select" id="modeSelect">
-                <option value="default">選擇模式</option>
-                <option value="analysis">深度分析</option>
-                <option value="casual">隨意聊天</option>
-            </select>
             <button class="send-btn" id="sendBtn">
                 <svg viewBox="0 0 24 24" width="20" height="20">
                     <path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"></path>

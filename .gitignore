@@ -1,4 +1,5 @@
 .vscode/
+.claude/
 key.env
 *.png
 *.jpg
