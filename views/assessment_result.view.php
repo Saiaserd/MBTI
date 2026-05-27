@@ -39,6 +39,15 @@ $scores = $assessment['scores'];
 $stack  = $assessment['stack'];
 $type   = $assessment['type'];
 
+// 人格分組 → CSS class（決定類型卡顏色）
+$type_group_map = [
+    'INTJ' => 'nt', 'INTP' => 'nt', 'ENTJ' => 'nt', 'ENTP' => 'nt',
+    'INFJ' => 'nf', 'INFP' => 'nf', 'ENFJ' => 'nf', 'ENFP' => 'nf',
+    'ISTJ' => 'sj', 'ISFJ' => 'sj', 'ESTJ' => 'sj', 'ESFJ' => 'sj',
+    'ISTP' => 'sp', 'ISFP' => 'sp', 'ESTP' => 'sp', 'ESFP' => 'sp',
+];
+$hero_class = 'hero-' . ($type_group_map[strtoupper($type)] ?? 'nt');
+
 $is_guest = empty($_SESSION['user_id']);
 ?>
 
@@ -47,7 +56,7 @@ $is_guest = empty($_SESSION['user_id']);
     <div class="result-layout">
         <div class="result-left">
             <!-- 人格標籤（類型卡） -->
-            <header class="result-hero">
+            <header class="result-hero <?= $hero_class ?>">
                 <p class="hero-eyebrow">你的人格類型</p>
                 <h1 class="hero-type"><?= htmlspecialchars($type) ?></h1>
                 <p class="hero-desc"><?= htmlspecialchars($assessment['desc']) ?></p>

@@ -82,6 +82,17 @@ body {
     text-align: center;
 }
 
+/* 測驗連結特別標示 */
+.topnav-links a.nav-highlight {
+    background: #4f46e5;
+    color: #fff;
+    font-weight: 600;
+}
+.topnav-links a.nav-highlight:hover {
+    background: #4338ca;
+    color: #fff;
+}
+
 /* 漢堡按鈕（預設隱藏，窄畫面才顯示） */
 .topnav-toggle {
     display: none;

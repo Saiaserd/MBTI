@@ -73,6 +73,16 @@ if (!empty($_SESSION['assessment'])) {
         '把對話定位為「使用者拿著體檢報告諮詢醫生」的場景。若使用者問題很開放，可參考報告主動提出他可能會關心的解讀方向。';
 }
 
+// 若前端傳了頁面背景（浮動 widget 用），附加到 system prompt
+if (!empty($decodedData['pageContext'])) {
+    $system_text .=
+        "\n\n===== 當前頁面背景 =====\n" .
+        $decodedData['pageContext'] .
+        "\n========================\n" .
+        '請特別針對此頁面的內容協助使用者理解，並以頁面內容為主軸回答。';
+    unset($decodedData['pageContext']); // 不轉送給 Gemini，只留 contents
+}
+
 $decodedData['systemInstruction'] = [
     'parts' => [['text' => $system_text]]
 ];

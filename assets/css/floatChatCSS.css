@@ -1,0 +1,303 @@
+/* 浮動 AI 聊天 Widget */
+
+/* 整體容器，釘在右下角 */
+.float-chat-wrap {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 9000;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+}
+
+/* 觸發圓圈按鈕 */
+.float-chat-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+    flex-shrink: 0;
+    /* pulse 動畫吸引注意 */
+    animation: floatBtnPulse 2.4s ease-in-out infinite;
+}
+.float-chat-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 6px 28px rgba(79, 70, 229, 0.55);
+    animation: none; /* 滑過後停止跳動，避免干擾互動 */
+}
+.float-chat-btn svg {
+    width: 26px;
+    height: 26px;
+    fill: #fff;
+}
+@keyframes floatBtnPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(79, 70, 229, 0.4); }
+    50%       { box-shadow: 0 4px 28px rgba(79, 70, 229, 0.75), 0 0 0 8px rgba(79, 70, 229, 0.12); }
+}
+
+
+/* 聊天面板（預設隱藏） */
+.float-chat-panel {
+    width: 360px;
+    height: 480px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 12px 48px rgba(0,0,0,0.18);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+
+    /* 隱藏 / 顯示動畫 */
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+    pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+}
+.float-chat-panel.open {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* 面板頂部標題列 */
+.float-panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    flex-shrink: 0;
+}
+.float-panel-title {
+    font-size: 15px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.float-panel-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 1;
+    padding: 2px 6px;
+    border-radius: 6px;
+    transition: background 0.15s, color 0.15s;
+}
+.float-panel-close:hover {
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+}
+
+/* 訊息區 */
+.float-chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: #f9fafb;
+    scrollbar-width: thin;
+    scrollbar-color: #ddd transparent;
+}
+
+/* 歡迎提示 */
+.float-welcome {
+    font-size: 13px;
+    color: #6b7280;
+    text-align: center;
+    padding: 12px 8px;
+    line-height: 1.6;
+}
+
+/* 訊息氣泡 */
+.float-msg {
+    display: flex;
+}
+.float-msg.user {
+    justify-content: flex-end;
+}
+.float-msg.ai,
+.float-msg.error {
+    justify-content: flex-start;
+}
+.float-bubble {
+    max-width: 85%;
+    padding: 9px 13px;
+    border-radius: 14px;
+    font-size: 13.5px;
+    line-height: 1.6;
+    word-break: break-word;
+}
+.float-bubble.user {
+    background: #4f46e5;
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+.float-bubble.ai {
+    background: #fff;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    border-bottom-left-radius: 4px;
+}
+.float-bubble.error {
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fca5a5;
+    font-size: 13px;
+}
+
+/* AI 氣泡裡的 Markdown 重設 */
+.float-bubble.ai p  { margin: 0 0 6px; }
+.float-bubble.ai p:last-child { margin-bottom: 0; }
+.float-bubble.ai ul,
+.float-bubble.ai ol { margin: 4px 0 6px 18px; }
+.float-bubble.ai li { margin-bottom: 3px; }
+.float-bubble.ai code {
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+.float-bubble.ai strong { color: #111; }
+
+/* 打字中跳點 */
+.float-typing {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+    padding: 10px 14px;
+}
+.float-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #9ca3af;
+    animation: floatDotBounce 1.2s infinite ease-in-out;
+}
+.float-dot:nth-child(2) { animation-delay: 0.2s; }
+.float-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes floatDotBounce {
+    0%, 80%, 100% { transform: translateY(0); }
+    40%           { transform: translateY(-6px); }
+}
+
+/* 輸入列 */
+.float-input-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    padding: 10px 12px;
+    border-top: 1px solid #e5e7eb;
+    background: #fff;
+    flex-shrink: 0;
+}
+.float-input {
+    flex: 1;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 13.5px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    max-height: 100px;
+    overflow-y: auto;
+    color: #1f2937;
+    line-height: 1.5;
+    transition: border-color 0.15s;
+}
+.float-input:focus { border-color: #6366f1; }
+.float-send-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #4f46e5;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.15s;
+}
+.float-send-btn:hover  { background: #4338ca; }
+.float-send-btn:active { transform: scale(0.93); }
+.float-send-btn:disabled { background: #c7d2fe; cursor: default; }
+.float-send-btn svg { width: 17px; height: 17px; fill: #fff; }
+
+/* 按鈕列：氣泡 + 圓圈並排 */
+.float-btn-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 進頁提示氣泡：在按鈕左側，箭頭朝右指向按鈕 */
+.float-hint-bubble {
+    position: relative;
+    background: #1f2937;
+    color: #fff;
+    font-size: 13px;
+    padding: 10px 34px 10px 14px;
+    border-radius: 12px;
+    white-space: nowrap;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    line-height: 1.5;
+
+    /* 預設隱藏；加 .visible 後滑入 */
+    opacity: 0;
+    transform: translateX(8px);
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+/* 箭頭朝右，指向按鈕 */
+.float-hint-bubble::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -7px;
+    transform: translateY(-50%);
+    border-width: 7px 0 7px 7px;
+    border-style: solid;
+    border-color: transparent transparent transparent #1f2937;
+}
+.float-hint-bubble.visible {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+.float-hint-close {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    font-size: 14px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 2px;
+}
+.float-hint-close:hover { color: #fff; }
+
+@media (max-width: 480px) {
+    .float-chat-wrap { bottom: 16px; right: 16px; }
+    .float-chat-panel { width: calc(100vw - 32px); height: 420px; }
+    .float-hint-bubble { white-space: normal; max-width: 180px; }
+}

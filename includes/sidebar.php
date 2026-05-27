@@ -15,6 +15,7 @@
 
     <ul class="topnav-links" id="topnav-links">
         <li><a href="home.php"><i class="user-icon">🏠</i><span>主頁</span></a></li>
+        <li><a href="assessment.php" class="nav-highlight"><i class="user-icon">📝</i><span>測驗</span></a></li>
         <li><a href="index.php"><i class="user-icon">🗞️</i><span>八維介紹</span></a></li>
         <li><a href="wiki.php"><i class="user-icon">📖</i><span>基礎介紹</span></a></li>
         <li><a href="seizure.php"><i class="user-icon">📚</i><span>榮格介紹</span></a></li>

@@ -20,6 +20,18 @@ $fn_meta = [
     'Fe' => ['name' => '外向情感', 'color' => '#e74c3c'],
 ];
 
+// 人格分組 → 對應漸層色
+$type_colors = [
+    'INTJ' => '#4f46e5, #7c3aed', 'INTP' => '#4f46e5, #7c3aed',
+    'ENTJ' => '#4f46e5, #7c3aed', 'ENTP' => '#4f46e5, #7c3aed',
+    'INFJ' => '#059669, #10b981', 'INFP' => '#059669, #10b981',
+    'ENFJ' => '#059669, #10b981', 'ENFP' => '#059669, #10b981',
+    'ISTJ' => '#1d4ed8, #3b82f6', 'ISFJ' => '#1d4ed8, #3b82f6',
+    'ESTJ' => '#1d4ed8, #3b82f6', 'ESFJ' => '#1d4ed8, #3b82f6',
+    'ISTP' => '#d97706, #f59e0b', 'ISFP' => '#d97706, #f59e0b',
+    'ESTP' => '#d97706, #f59e0b', 'ESFP' => '#d97706, #f59e0b',
+];
+
 // 預覽用：取對話的第一句使用者訊息當摘要
 function chat_preview(array $messages): string {
     if (empty($messages)) return '（空對話）';
@@ -50,7 +62,13 @@ function chat_preview(array $messages): string {
         <article class="report-card">
             <header class="report-card-head">
                 <div class="report-type">
-                    <span class="type-badge"><?= htmlspecialchars($a['mbti_type']) ?></span>
+                    <?php
+                        $t = strtoupper($a['mbti_type']);
+                        $gradient = $type_colors[$t] ?? '#4f46e5, #7c3aed';
+                    ?>
+                    <span class="type-badge" style="background: linear-gradient(135deg, <?= $gradient ?>)">
+                        <?= htmlspecialchars($a['mbti_type']) ?>
+                    </span>
                     <span class="report-date"><?= htmlspecialchars($a['created_at']) ?></span>
                 </div>
                 <div class="report-actions">

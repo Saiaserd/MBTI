@@ -54,11 +54,31 @@ body {
 .result-hero {
     text-align: center;
     padding: 36px 24px;
-    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%); /* 預設 NT 紫 */
     color: #fff;
     border-radius: 20px;
     box-shadow: 0 20px 50px rgba(79, 70, 229, 0.25);
     margin: 0;
+}
+/* NT 分析家：紫 */
+.result-hero.hero-nt {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    box-shadow: 0 20px 50px rgba(79, 70, 229, 0.25);
+}
+/* NF 外交官：綠 */
+.result-hero.hero-nf {
+    background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    box-shadow: 0 20px 50px rgba(5, 150, 105, 0.25);
+}
+/* SJ 守護者：藍 */
+.result-hero.hero-sj {
+    background: linear-gradient(135deg, #1d4ed8 0%, #3b82f6 100%);
+    box-shadow: 0 20px 50px rgba(29, 78, 216, 0.25);
+}
+/* SP 探索者：黃 */
+.result-hero.hero-sp {
+    background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+    box-shadow: 0 20px 50px rgba(217, 119, 6, 0.25);
 }
 .hero-eyebrow {
     margin: 0 0 8px;

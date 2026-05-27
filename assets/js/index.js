@@ -6,6 +6,9 @@
  * colorMap：每維對應的主題色（同一組功能配同色，例如 Ti/Te 都是藍色）。
  */
 
+// 暴露全域讓 float-chat.js 讀取，作為 AI 的頁面內容背景
+window.floatChatPageData = null; // 下方 DOMContentLoaded 後填充
+
 document.addEventListener('DOMContentLoaded', () => {
     const introData = {
         "Ti": `• Ti在1位（ISTP/INTP）：核心功能，追尋邏輯自洽與原理精準，習慣獨立拆解分析，思維冷靜客觀，凡事以內在邏輯體系為判斷標準。
@@ -80,6 +83,9 @@ document.addEventListener('DOMContentLoaded', () => {
 • Fe在7位（INTJ/ISTJ）：愚者功能，假裝合群尋求認可，內心抗拒卻表面配合。
 • Fe在8位（ENTJ/ESTJ）：魔鬼功能，忽視他人情緒，不易察覺人際緊張與矛盾。`
     };
+
+    // 讓 float-chat.js 可以讀到完整的八維介紹內容
+    window.floatChatPageData = introData;
 
     const colorMap = {
         "Ti": "#3498db", "Te": "#3498db",
