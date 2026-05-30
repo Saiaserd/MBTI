@@ -45,10 +45,6 @@
             </div>
         </div>
         <div class="float-btn-row">
-            <div class="float-hint-bubble" id="floatHint">
-                💬 這頁有 AI 助手，有疑問點我問！
-                <button class="float-hint-close" id="floatHintClose" aria-label="關閉提示">✕</button>
-            </div>
             <button class="float-chat-btn" id="floatBtn" aria-label="開啟 AI 助手">
                 <svg viewBox="0 0 24 24">
                     <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/>
@@ -82,30 +78,8 @@
     // 延遲到下一個 tick，確保 index.js 的 DOMContentLoaded 已執行
     setTimeout(buildWelcome, 0);
 
-    // ── 提示氣泡：進頁 1 秒後顯示，8 秒後自動消失
-    //    使用者點 × 或點圓圈都會關掉，不做「記住已看過」的判斷
-    const hint = document.getElementById('floatHint');
-    let hintTimer;
-
-    function showHint() {
-        hint.classList.add('visible');
-        hintTimer = setTimeout(dismissHint, 8000);
-    }
-    function dismissHint() {
-        clearTimeout(hintTimer);
-        hint.classList.remove('visible');
-    }
-
-    setTimeout(showHint, 1000);
-
-    document.getElementById('floatHintClose').addEventListener('click', function (e) {
-        e.stopPropagation();
-        dismissHint();
-    });
-
     // ── 開關 ──────────────────────────────────────────────
     document.getElementById('floatBtn').addEventListener('click', function () {
-        dismissHint();
         panel.classList.toggle('open');
         if (panel.classList.contains('open')) input.focus();
     });
@@ -135,7 +109,14 @@
         if (data && typeof data === 'object') {
             ctx += '\n\n===== 頁面完整內容 =====\n';
             for (const [key, value] of Object.entries(data)) {
-                ctx += `\n【${key}】\n${value}\n`;
+                if (value && typeof value === 'object') {
+                    // { desc, detail } 格式
+                    ctx += `\n【${key}】\n`;
+                    if (value.desc)   ctx += `摘要：${value.desc}\n`;
+                    if (value.detail) ctx += `${value.detail}\n`;
+                } else {
+                    ctx += `\n【${key}】\n${value}\n`;
+                }
             }
             ctx += '\n=========================';
         }

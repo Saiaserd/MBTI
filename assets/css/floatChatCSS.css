@@ -11,6 +11,15 @@
     align-items: flex-end;
     gap: 12px;
     font-family: "Microsoft JhengHei", "PingFang TC", sans-serif;
+    /* 容器與按鈕列本身都不吃點擊：避免隱藏面板（360×480）與被氣泡撐寬的
+       按鈕列盒子擋住底下內容。只讓「真正能互動」的元素重新開啟 pointer-events */
+    pointer-events: none;
+}
+.float-btn-row { pointer-events: none; }
+/* 真正可互動的元素：圓圈、開啟中的面板 */
+.float-chat-btn,
+.float-chat-panel.open {
+    pointer-events: auto;
 }
 
 /* 觸發圓圈按鈕 */
@@ -25,15 +34,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform 0.25s ease, box-shadow 0.2s, opacity 0.25s ease;
     flex-shrink: 0;
-    /* pulse 動畫吸引注意 */
-    animation: floatBtnPulse 2.4s ease-in-out infinite;
+    /* 平時收進右邊緣只露一半（往右推 = wrap 的 28px + 半顆 28px），半透明降低存在感 */
+    transform: translateX(56px);
+    opacity: 0.55;
 }
-.float-chat-btn:hover {
-    transform: scale(1.08);
+/* 只在滑過「露出的半顆按鈕」或面板開啟時 → 整顆滑出來
+   （不用 .float-chat-wrap:hover，否則隱藏面板的大範圍會讓滑鼠離很遠就觸發） */
+.float-chat-btn:hover,
+.float-chat-panel.open ~ .float-btn-row .float-chat-btn {
+    transform: translateX(0) scale(1.05);
+    opacity: 1;
     box-shadow: 0 6px 28px rgba(79, 70, 229, 0.55);
-    animation: none; /* 滑過後停止跳動，避免干擾互動 */
 }
 .float-chat-btn svg {
     width: 26px;
@@ -248,56 +261,7 @@
     gap: 10px;
 }
 
-/* 進頁提示氣泡：在按鈕左側，箭頭朝右指向按鈕 */
-.float-hint-bubble {
-    position: relative;
-    background: #1f2937;
-    color: #fff;
-    font-size: 13px;
-    padding: 10px 34px 10px 14px;
-    border-radius: 12px;
-    white-space: nowrap;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
-    line-height: 1.5;
-
-    /* 預設隱藏；加 .visible 後滑入 */
-    opacity: 0;
-    transform: translateX(8px);
-    pointer-events: none;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-}
-/* 箭頭朝右，指向按鈕 */
-.float-hint-bubble::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -7px;
-    transform: translateY(-50%);
-    border-width: 7px 0 7px 7px;
-    border-style: solid;
-    border-color: transparent transparent transparent #1f2937;
-}
-.float-hint-bubble.visible {
-    opacity: 1;
-    transform: translateX(0);
-    pointer-events: auto;
-}
-.float-hint-close {
-    position: absolute;
-    top: 6px;
-    right: 8px;
-    background: none;
-    border: none;
-    color: rgba(255,255,255,0.6);
-    font-size: 14px;
-    cursor: pointer;
-    line-height: 1;
-    padding: 2px;
-}
-.float-hint-close:hover { color: #fff; }
-
 @media (max-width: 480px) {
     .float-chat-wrap { bottom: 16px; right: 16px; }
     .float-chat-panel { width: calc(100vw - 32px); height: 420px; }
-    .float-hint-bubble { white-space: normal; max-width: 180px; }
 }

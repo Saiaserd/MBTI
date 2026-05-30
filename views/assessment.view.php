@@ -2,10 +2,10 @@
 /**
  * 八維測驗 HTML 模板
  * 需要的變數：
- *   $questions  → 70 題的陣列（從 data/questions.php 來）
+ *   $questions  → 40 題的陣列（從 data/questions.php 來）
  *
  * 設計：
- *   - 把 70 題切成 7 頁，每頁 10 題（避免一次顯示太長嚇跑使用者）
+ *   - 把 40 題切成數頁，每頁 10 題（避免一次顯示太長嚇跑使用者）
  *   - 每頁切換用 JS 控制（assessment.js）
  *   - 表單最終以 POST 送到 api/submit_assessment.php
  *

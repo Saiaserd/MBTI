@@ -11,7 +11,10 @@ $page_css   = ['assets/css/wikiCSS.css', 'assets/css/floatChatCSS.css'];
 $types = require __DIR__ . '/data/mbti_types.php';
 $types_for_js = [];
 foreach ($types as $key => $val) {
-    $types_for_js[strtoupper($key)] = $val['desc'];
+    $types_for_js[strtoupper($key)] = [
+        'desc'   => $val['desc'],
+        'detail' => $val['detail'] ?? '',
+    ];
 }
 
 $page_extra_body =

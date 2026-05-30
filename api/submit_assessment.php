@@ -3,7 +3,7 @@
  * 八維測驗結果處理端點
  *
  * 流程：
- *   1. 收 assessment.php 表單 POST 過來的 70 個 q{id} = 1~5
+ *   1. 收 assessment.php 表單 POST 過來的 40 個 q{id} = 1~5
  *   2. 用 includes/scoring.php 算出 8 維分數 + MBTI 類型
  *   3. 寫入 $_SESSION['assessment']（訪客也用這個，session 結束就消失）
  *   4. 若使用者登入 → 另存一筆到 assessments 資料表
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// ---------- 1. 收答案：POST 裡所有 q1~q70 ----------
+// ---------- 1. 收答案：POST 裡所有 q1~q40 ----------
 $questions = require __DIR__ . '/../data/questions.php';
 $answers   = [];
 foreach ($questions as $q) {

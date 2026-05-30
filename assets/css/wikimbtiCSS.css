@@ -57,12 +57,20 @@
     font-weight: bold;
 }
 
-/* 綠色框 (介紹) */
-.description-box {
-    border: 2px solid #69e94f; /* 綠色框 */
+/* 綠色框 (介紹 / 完整功能說明) */
+.description-box,
+.detail-box {
+    border: 2px solid #69e94f;
     padding: 20px;
     border-radius: 15px;
     line-height: 1.8;
+}
+
+.detail-content {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #374151;
+    white-space: pre-wrap;
 }
 
 /* 導覽按鈕樣式 */
