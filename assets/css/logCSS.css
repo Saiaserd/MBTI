@@ -1,0 +1,307 @@
+/* 紀錄頁樣式（按報告分組版） */
+
+.main-content {
+    padding: 40px;
+    background-color: #f4f7f9;
+    min-height: 100vh;
+}
+
+.log-container {
+    max-width: 880px;
+    margin: 0 auto;
+}
+
+.log-container h2 {
+    margin: 0 0 24px;
+    color: #1f2937;
+    font-size: 26px;
+}
+
+.log-hint {
+    color: #6b7280;
+    background: #fff;
+    padding: 20px 24px;
+    border-radius: 12px;
+    border: 1px dashed #d1d5db;
+}
+.log-hint a {
+    color: #4f46e5;
+    text-decoration: underline;
+}
+
+/* ───────── 報告卡 ───────── */
+.report-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+    padding: 22px 24px;
+    margin-bottom: 24px;
+    border: 1px solid #e5e7eb;
+}
+
+.report-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+.report-type {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+.type-badge {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: #fff;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: 2px;
+    padding: 6px 14px;
+    border-radius: 10px;
+}
+.report-date {
+    color: #9ca3af;
+    font-size: 13px;
+}
+.report-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.btn-view-report {
+    padding: 8px 16px;
+    background: #f3f4f6;
+    color: #374151;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background 0.15s;
+    white-space: nowrap;
+}
+.btn-view-report:hover {
+    background: #e5e7eb;
+}
+.btn-delete-report {
+    padding: 8px 14px;
+    background: #fef2f2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s;
+}
+.btn-delete-report:hover {
+    background: #fee2e2;
+}
+
+/* ───────── 8 維迷你分數條 ───────── */
+.mini-scores {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 18px;
+    padding: 14px 0 18px;
+    border-bottom: 1px solid #f3f4f6;
+    margin-bottom: 18px;
+}
+.mini-score {
+    display: grid;
+    grid-template-columns: 36px 1fr 28px;
+    align-items: center;
+    gap: 8px;
+}
+.mini-fn {
+    display: inline-block;
+    color: #fff;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 5px;
+    text-align: center;
+}
+.mini-bar-wrap {
+    height: 6px;
+    background: #f3f4f6;
+    border-radius: 999px;
+    overflow: hidden;
+}
+.mini-bar {
+    height: 100%;
+    border-radius: 999px;
+}
+.mini-val {
+    font-size: 12px;
+    color: #4b5563;
+    text-align: right;
+    font-weight: 600;
+}
+
+/* ───────── 對話串清單 ───────── */
+.chat-list-label {
+    margin: 0 0 10px;
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 600;
+}
+.no-chat-hint {
+    margin: 8px 0 0;
+    padding: 10px 14px;
+    background: #f9fafb;
+    border-radius: 8px;
+    color: #9ca3af;
+    font-size: 13px;
+}
+
+.chat-item {
+    background: #fafafa;
+    border: 1px solid #eef0f3;
+    border-radius: 10px;
+    margin-bottom: 8px;
+    overflow: hidden;
+}
+.chat-item-main {
+    display: grid;
+    grid-template-columns: auto 1fr auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+}
+.chat-item-main:hover {
+    background: #f3f4f6;
+}
+.chat-item-title {
+    font-weight: 700;
+    color: #1f2937;
+    font-size: 14px;
+}
+.chat-item-preview {
+    color: #6b7280;
+    font-size: 13px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.chat-item-time {
+    color: #9ca3af;
+    font-size: 12px;
+    white-space: nowrap;
+}
+.log-toggle-icon {
+    color: #9ca3af;
+    font-size: 11px;
+}
+
+.chat-item-actions {
+    display: flex;
+    gap: 8px;
+    padding: 0 16px 12px;
+}
+.btn-continue {
+    padding: 6px 14px;
+    background: #4f46e5;
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+}
+.btn-continue:hover {
+    background: #4338ca;
+}
+.btn-delete {
+    padding: 6px 14px;
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fee2e2;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-delete:hover {
+    background: #fee2e2;
+}
+
+.chat-item-body {
+    padding: 0 16px 16px;
+    border-top: 1px dashed #e5e7eb;
+    margin-top: 4px;
+}
+.chat-item-body.collapsed {
+    display: none;
+}
+
+/* ───────── 對話氣泡 ───────── */
+.log-bubble {
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+.log-bubble span {
+    font-size: 11px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 4px;
+}
+.log-user {
+    background: #eef2ff;
+}
+.log-user span {
+    color: #4f46e5;
+}
+.log-ai {
+    background: #f9fafb;
+}
+.log-ai span {
+    color: #6b7280;
+}
+.log-bubble p {
+    margin: 0;
+    color: #1f2937;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    font-size: 13px;
+}
+
+/* ───────── 孤兒區（沒綁報告的舊對話） ───────── */
+.orphan-section {
+    margin-top: 32px;
+    padding: 22px 24px;
+    background: #fffbeb;
+    border: 1px dashed #fcd34d;
+    border-radius: 14px;
+}
+.orphan-section h3 {
+    margin: 0 0 6px;
+    color: #92400e;
+    font-size: 16px;
+}
+.orphan-hint {
+    margin: 0 0 14px;
+    color: #b45309;
+    font-size: 12px;
+}
+
+/* ───────── 響應式 ───────── */
+@media (max-width: 720px) {
+    .main-content { padding: 24px 16px; }
+    .mini-scores { grid-template-columns: 1fr; }
+    .chat-item-main {
+        grid-template-columns: 1fr auto;
+        grid-template-areas:
+            "title time"
+            "preview preview"
+            "icon icon";
+    }
+    .chat-item-title   { grid-area: title; }
+    .chat-item-preview { grid-area: preview; }
+    .chat-item-time    { grid-area: time; }
+    .log-toggle-icon   { grid-area: icon; text-align: right; }
+}

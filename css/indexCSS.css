@@ -1,0 +1,232 @@
+/* ==========================================================================
+   1. 主標題樣式
+   ========================================================================== */
+.about-header h1 {
+    text-align: center;      /* 讓文字水平居中 */
+    margin-top: 20px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   2. 八維卡片整體容器：4欄 × 2列（完美置中 + 間距加大 + 整體下移）
+   ========================================================================== */
+.grid-container {
+    display: grid !important; 
+    /* 🚀 寬度足夠時強制排成精確的 4 欄 */
+    grid-template-columns: repeat(4, minmax(140px, 1fr)) !important; 
+    
+    /* 🚀 調整點 1：加大格子之間的呼吸距離（上下 35px，左右 30px） */
+    gap: 35px 30px !important;            
+    padding: 20px;
+    
+    /* 🚀 限制最大總寬度，避免在超大螢幕上過度拉伸 */
+    max-width: 1150px;    
+    
+    /* 🚀 調整點 2：頂部 80px 讓整塊容器明顯往下移，拉開與大標題的完美距離 */
+    margin: 80px auto !important; 
+    
+    width: 90%;          
+    box-sizing: border-box;
+}
+
+/* ==========================================================================
+   3. 個別卡片基礎樣式（微調高度、圓角與陰影，增加份量感）
+   ========================================================================== */
+.card {
+    /* 🚀 調整點 3：增加上下內襯托（35px），讓卡片高度稍微長一點，點擊感更好 */
+    padding: 35px 15px;
+    text-align: center;
+    border-radius: 14px;        /* 圓角稍微柔化 */
+    background-color: #f8f9fa;  /* 預設淡淡的灰色底 */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05); /* 輕微的立體陰影 */
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    border-top: 6px solid #ccc; /* 頂部色條加粗，用來凸顯功能顏色 */
+    
+    /* 清除 <a> 連結的預設藍字與底線樣式 */
+    text-decoration: none; 
+    color: inherit;        
+    display: block;        
+}
+
+/* 🚀 滑鼠懸停（Hover）動態效果 */
+.card:hover {
+    transform: translateY(-5px);           /* 微微向上懸浮 5px */
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1); /* 陰影加深，產生卡片變高的錯覺 */
+    background-color: #ffffff;             /* 背景變亮白，提示可點擊 */
+}
+
+/* 卡片內部的文字樣式 */
+.card h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.card p {
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+/* ==========================================================================
+   4. 為不同功能組別上色（對應卡片上的 class）
+   ========================================================================== */
+.ti, .te { border-top-color: #3498db; } /* 藍色系：思考 (Thinking) */
+.si, .se { border-top-color: #2ecc71; } /* 綠色系：實感 (Sensing) */
+.ni, .ne { border-top-color: #9b59b6; } /* 紫色系：直覺 (iNtuition) */
+.fi, .fe { border-top-color: #e74c3c; } /* 紅色系：情感 (Feeling) */
+
+
+/* ==========================================================================
+   5. 彈窗遮罩與內容樣式（Modal Base）
+   ========================================================================== */
+/* 彈窗背景黑色半透明遮罩 */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;              /* 確保疊在網頁最上層 */
+    backdrop-filter: blur(3px); /* 背景微微模糊，高級感十足 */
+}
+
+/* 彈窗主體白色卡片 */
+.modal-content.advanced-modal {
+    background: #fff;
+    max-width: 700px; 
+    width: 90%;
+    padding: 40px;    
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: popUp 0.3s ease-out; /* 套用放大彈出動畫 */
+}
+
+/* 關閉按鈕 (&times; 叉叉) */
+.close-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    z-index: 10;
+    transition: color 0.2s;
+}
+.close-modal:hover { 
+    color: #333; 
+}
+
+/* 🚀 彈出動畫效果 */
+@keyframes popUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+
+/* ==========================================================================
+   6. 精簡版大按鈕分頁配置（Modal 內部元件）
+   ========================================================================== */
+/* 彈窗標題區塊（如：Ti 💡） */
+.modal-simple-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.modal-simple-header h1 {
+    font-size: 3.5rem;
+    margin: 0;
+    font-weight: bold;
+}
+
+.modal-icon {
+    font-size: 2.2rem;
+}
+
+/* 1位~8位 橫向分頁按鈕列 */
+.tab-navigation {
+    display: flex;
+    gap: 12px;        
+    margin-bottom: 28px;
+    width: 100%;
+    max-width: 90%;   
+}
+
+/* 1位~8位 大按鈕樣式 */
+.tab-btn {
+    flex: 1;
+    padding: 16px 10px;     
+    border: none;
+    background: #e9ecef;
+    color: #495057;
+    font-weight: 800;       
+    border-radius: 12px;    
+    cursor: pointer;
+    font-size: 1.15rem;     
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05); 
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-btn:hover {
+    background: #dee2e6;
+    transform: translateY(-2px); 
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+
+/* ==========================================================================
+   7. 功能詳解詳情文字方塊（含自訂滾動條）
+   ========================================================================== */
+.intro-text-box {
+    background: #f8f9fa;
+    padding: 22px;
+    border-radius: 12px;
+    border-left: 6px solid #3498db; /* 左側粗色條，動態由 JS 改顏色 */
+    max-height: 400px; 
+    overflow-y: auto;               /* 內容過長時自動出現垂直滾動條 */
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.02);
+}
+
+#content-subtitle {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.3rem;
+    color: #111;
+    font-weight: bold;
+}
+
+#modal-content {
+    white-space: pre-line; /* 保持文字換行 */
+    line-height: 1.8;      
+    text-align: left;      
+    color: #444;
+}
+
+
+/* ==========================================================================
+   8. 📱 行動版響應式 RWD（畫面寬度小於 768px 時自動切換為 2 欄）
+   ========================================================================== */
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: repeat(2, 1fr) !important; /* 變成 2 欄 */
+        gap: 20px !important;                             /* 行動版間距微調窄一點 */
+        margin: 40px auto !important;                     /* 行動版上下留白縮小 */
+    }
+    
+    /* 行動版彈窗的分頁按鈕自動換行，避免擠壓 */
+    .tab-navigation {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+    .tab-btn {
+        flex: calc(25% - 8px); /* 一排顯示 4 個按鈕，共兩排 */
+        padding: 10px 4px;
+        font-size: 0.95rem;
+    }
+}

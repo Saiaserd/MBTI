@@ -1,0 +1,10 @@
+<?php
+/**
+ * 榮格介紹頁（純靜態）
+ */
+$page_title = '封存頁面';
+$page_css   = ['assets/css/seizureCSS.css'];
+require __DIR__ . '/includes/bootstrap.php';
+require __DIR__ . '/includes/header.php';
+require __DIR__ . '/views/seizure.view.php';
+require __DIR__ . '/includes/footer.php';

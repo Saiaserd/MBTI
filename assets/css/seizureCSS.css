@@ -1,0 +1,56 @@
+/* 橘色框框：整張卡片的容器 */
+.intro-card {
+    display: flex;
+    background-color: #fff;
+    border: 2px solid #ffa500; /* 橘色外框 */
+    border-radius: 15px;
+    padding: 30px;
+    margin: 20px;
+    gap: 30px; /* 圖片與文字之間的間距 */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* 綠色框框：圖片樣式 */
+.intro-image {
+    flex-shrink: 0; /* 防止圖片被壓縮 */
+    width: 200px;  /* 你手畫的綠色方框寬度 */
+    height: 250px; /* 你手畫的綠色方框高度 */
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #f0f0f0; /* 沒圖片時的預設底色 */
+}
+
+.intro-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 確保圖片填滿格子且不變形 */
+}
+
+/* 藍色線條：文字區域樣式 */
+.intro-text {
+    flex-grow: 1; /* 讓文字區域佔滿剩下的空間 */
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.intro-text h2 {
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #3498db; /* 藍色線條效果 */
+    padding-bottom: 1px;
+}
+
+.intro-text p {
+    color: #666;
+    line-height: 1.8;
+    margin-bottom: 10px;
+    background-size: 100% 1.5em;
+}
+
+/* 下方延伸的長條文字 */
+.extra-info {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #ccc;
+}

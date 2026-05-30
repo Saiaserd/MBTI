@@ -1,0 +1,147 @@
+/* 基本重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f4f7f6;
+    --topnav-height: 64px; /* CSS 變數，紀錄頂欄高度 */
+}
+
+/* 頂部導覽列主體：sticky 釘在畫面最上方 */
+.topnav {
+    width: 100%;
+    height: 64px;
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    border-bottom: 1px solid #e5e7eb;
+
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* 蓋住下方內容 */
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+}
+
+/* 品牌標題區（左側 logo） */
+.topnav-brand {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.topnav-brand h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.2rem;
+}
+
+/* 導覽連結列表（橫向排列） */
+.topnav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+}
+
+.topnav-links li {
+    padding: 0;
+}
+
+.topnav-links a {
+    text-decoration: none;
+    color: #6b7280;
+    display: flex;
+    align-items: center;
+    padding: 8px 14px;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+/* 滑鼠懸停與選中狀態 */
+.topnav-links a:hover {
+    background-color: #f3f4f6;
+    color: #111827;
+}
+
+.topnav-links a i {
+    margin-right: 8px;
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* 測驗連結特別標示 */
+.topnav-links a.nav-highlight {
+    background: #4f46e5;
+    color: #fff;
+    font-weight: 600;
+}
+.topnav-links a.nav-highlight:hover {
+    background: #4338ca;
+    color: #fff;
+}
+
+/* 漢堡按鈕（預設隱藏，窄畫面才顯示） */
+.topnav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.3rem;
+    color: #333;
+    padding: 8px;
+}
+
+/* 主內容區域：頂欄已 sticky 佔位，這裡只給內距 */
+.main-content {
+    padding: 30px;
+    width: 100%;
+}
+
+/* ───────── 響應式：窄畫面收成漢堡選單 ───────── */
+@media (max-width: 768px) {
+    .topnav {
+        flex-wrap: wrap;
+        padding: 0 16px;
+    }
+
+    .topnav-toggle {
+        display: block;
+    }
+
+    /* 連結預設收起（高度 0），點擊漢堡後展開 */
+    .topnav-links {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        gap: 0;
+        order: 3; /* 換到漢堡下方 */
+    }
+
+    .topnav.open .topnav-links {
+        max-height: 500px;
+        padding: 8px 0 12px;
+        border-top: 1px solid #e5e7eb;
+        margin-top: 8px;
+    }
+
+    .topnav-links a {
+        padding: 12px 14px;
+        border-radius: 0;
+    }
+}

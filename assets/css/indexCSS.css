@@ -1,0 +1,158 @@
+.about-header h1{
+    text-align: center; /* 讓文字水平居中 */
+    margin-top: 20px;
+}
+
+/* 整體容器 */
+.grid-container {
+    display: grid;
+    /* 電腦版排成兩列 (Ti Te Si Se 為第一列...)，或是四組垂直排列 */
+    grid-template-columns: repeat(1, 1fr); 
+    gap: 50px;
+    padding: 20px;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* 每一對功能的容器 */
+.function-pair {
+    display: flex;
+    gap: 15px;
+}
+
+/* 個別卡片樣式 */
+/* 修改 .card 樣式 */
+.card {
+    flex: 1;
+    padding: 25px 15px;
+    text-align: center;
+    border-radius: 12px;
+    background-color: #f8f9fa;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 5px solid #ccc;
+    
+    /* 新增以下屬性清除連結預設樣式 */
+    text-decoration: none; /* 移除下劃線 */
+    color: inherit;        /* 繼承原本文字顏色，防止變藍色 */
+    display: block;        /* 確保整塊區域都可點擊 */
+}
+
+/* 滑鼠懸停效果增加陰影感 */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    background-color: #ffffff; /* 稍微變亮 */
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: bold;
+}
+
+.card p {
+    margin: 10px 0 0;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+
+
+/* 為不同功能組別上色 (讓視覺更容易區分) */
+.ti, .te { border-top-color: #3498db; } /* 藍色系：思考 */
+.si, .se { border-top-color: #2ecc71; } /* 綠色系：實感 */
+.ni, .ne { border-top-color: #9b59b6; } /* 紫色系：直覺 */
+.fi, .fe { border-top-color: #e74c3c; } /* 紅色系：情感 */
+
+/* 彈窗遮罩：讓背景變暗 */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* 半透明黑 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000; /* 確保在最上層 */
+    backdrop-filter: blur(3px); /* 讓背景稍微模糊，更有質感 */
+}
+
+/* 彈窗白色卡片 */
+.modal-content {
+    background: #fff;
+    width: 90%;
+    max-width: 700px;
+    padding: 35px;
+    border-radius: 20px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    animation: popUp 0.3s ease-out;
+}
+
+#modal-content {
+    white-space: pre-line; /* 讓 JavaScript 中的 \n 換行符號生效 */
+    line-height: 1.6;      /* 稍微加寬行高，閱讀更舒適 */
+    text-align: left;      /* 列表式內容建議靠左對齊 */
+}
+
+/* 讓彈窗內部的文字方塊在內容多時可以捲動 */
+.intro-text-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 6px solid #3498db;
+    max-height: 400px; /* 新增高度限制 */
+    overflow-y: auto;  /* 新增垂直捲軸 */
+}
+
+/* 關閉按鈕 */
+.close-modal {
+    position: absolute;
+    top: 15px; right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+}
+.close-modal:hover { color: #333; }
+
+/* 彈窗內部的左右排版 */
+.modal-body {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.modal-left-section {
+    flex: 1;
+    text-align: center;
+    border-right: 2px solid #f0f0f0;
+}
+
+.modal-left-section h1 {
+    font-size: 3.5rem;
+    margin: 0;
+    color: #333;
+}
+
+.modal-right-section {
+    flex: 2;
+}
+
+.intro-text-box {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    border-left: 6px solid #3498db; /* 預設藍色 */
+}
+
+.intro-text-box p {
+    line-height: 1.8;
+    color: #444;
+}
+
+/* 彈出動畫 */
+@keyframes popUp {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}

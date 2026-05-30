@@ -1,0 +1,61 @@
+<?php
+/**
+ * MBTI 詳細頁的共用 HTML 模板
+ * 被 16 個 MBTI stub（enfj.php 等）載入。
+ *
+ * 進入頁傳進來的變數：
+ *   $type → 小寫 4 字母 MBTI 代碼，例如 'enfj'
+ *
+ * 從 data/mbti_types.php 撈出該型號的：
+ *   functions（八維順序陣列）、desc（介紹文字）、prev/next（上一/下一型號）
+ */
+
+$types = require __DIR__ . '/../data/mbti_types.php';
+
+// 防呆：給了奇怪的 type 直接 404，不要 PHP warning
+if (!isset($types[$type])) {
+    http_response_code(404);
+    echo '<p>找不到此 MBTI 類型。</p>';
+    return;
+}
+
+$info       = $types[$type];
+$type_upper = strtoupper($type);                // 顯示用大寫 (ENFJ)
+$prev_upper = strtoupper($info['prev']);
+$next_upper = strtoupper($info['next']);
+?>
+<div class="mbti-detail-container">
+
+    <!-- 左半：標題 + 角色圖 -->
+    <div class="detail-left-section">
+        <h1 class="mbti-title"><?= $type_upper ?></h1>
+        <div class="detail-img-box">
+            <img src="assets/images/<?= $type ?>.jpg" alt="<?= $type_upper ?>">
+        </div>
+    </div>
+
+    <!-- 右半：八維 + 介紹 -->
+    <div class="detail-right-section">
+        <div class="functions-box">
+            <h3>榮格八維</h3>
+            <div class="functions-grid">
+                <!-- 1 位到 8 位依序印出 -->
+                <?php foreach ($info['functions'] as $fn): ?>
+                <div class="function-item"><?= htmlspecialchars($fn) ?></div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="description-box">
+            <h3>人格介紹</h3>
+            <p><?= htmlspecialchars($info['desc']) ?></p>
+        </div>
+    </div>
+
+</div>
+
+<!-- 上一個 / 下一個型號的導覽列 -->
+<div class="nav-buttons-container">
+    <a href="<?= $info['prev'] ?>.php" class="nav-button">← 上一個 (<?= $prev_upper ?>)</a>
+    <a href="<?= $info['next'] ?>.php" class="nav-button">下一個 (<?= $next_upper ?>) →</a>
+</div>
