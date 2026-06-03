@@ -39,6 +39,10 @@ $scores = $assessment['scores'];
 $stack  = $assessment['stack'];
 $type   = $assessment['type'];
 
+// 該型的「世界刻板標籤」——讓使用者進報告前先親手撕掉
+$all_stereotypes = require __DIR__ . '/../data/stereotypes.php';
+$stereotypes     = $all_stereotypes[strtolower($type)] ?? [];
+
 // 人格分組 → CSS class（決定類型卡顏色）
 $type_group_map = [
     'INTJ' => 'nt', 'INTP' => 'nt', 'ENTJ' => 'nt', 'ENTP' => 'nt',
@@ -52,6 +56,73 @@ $is_guest = empty($_SESSION['user_id']);
 ?>
 
 <div class="result-container">
+
+    <!-- ══════ 第一幕：質疑標籤（蓋在報告上方，走完才露出報告） ══════ -->
+    <?php if (!empty($stereotypes)): ?>
+    <section class="teardown" id="teardown" data-total="<?= count($stereotypes) ?>">
+        <div class="teardown-inner">
+            <p class="teardown-eyebrow">測驗完成 · 先別急著看結果</p>
+            <h1 class="teardown-title">這是世界貼在「<?= htmlspecialchars($type) ?>」身上的標籤</h1>
+            <p class="teardown-sub">
+                網路把這個類型簡化成這幾個字。<br>
+                逐一看過——<strong>哪些你覺得沾得上邊，哪些根本不是你？</strong>
+            </p>
+
+            <!-- 卡片堆：一次一張，使用者判斷「有點像 / 完全不像」 -->
+            <div class="judge-deck" id="judgeDeck">
+                <?php foreach ($stereotypes as $i => $s): ?>
+                    <article class="judge-card" data-idx="<?= $i ?>"
+                             data-label="<?= htmlspecialchars($s['label'], ENT_QUOTES) ?>"
+                             data-fn="<?= htmlspecialchars($s['fn'], ENT_QUOTES) ?>"
+                             data-truth="<?= htmlspecialchars($s['truth'], ENT_QUOTES) ?>">
+                        <span class="judge-quote">別人說你是</span>
+                        <span class="judge-label">「<?= htmlspecialchars($s['label']) ?>」</span>
+                        <span class="judge-hint">這個標籤，像你嗎？</span>
+                    </article>
+                <?php endforeach; ?>
+            </div>
+
+            <!-- 判斷按鈕 -->
+            <div class="judge-actions" id="judgeActions">
+                <button type="button" class="judge-btn judge-rip" id="judgeRip">
+                    <span class="judge-btn-icon">✕</span> 完全不是我，撕掉
+                </button>
+                <button type="button" class="judge-btn judge-keep" id="judgeKeep">
+                    <span class="judge-btn-icon">✓</span> 有點像我，留著
+                </button>
+            </div>
+
+            <div class="teardown-progress">
+                <div class="teardown-bar"><div class="teardown-bar-fill" id="teardownFill"></div></div>
+                <p class="teardown-count"><span id="teardownDone">0</span> / <?= count($stereotypes) ?> 已判斷</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第二幕：撕完後的過場句（依「撕掉/留下」數量動態帶入文字） -->
+    <div class="teardown-bridge" id="teardownBridge" aria-hidden="true">
+        <p class="bridge-line1">你撕掉了 <span id="bridgeRipped">0</span> 個不屬於你的標籤。</p>
+        <p class="bridge-strong">沒有人能用幾個字定義你。</p>
+        <p class="bridge-line3">剩下的，讓我們看看它們底下<br>真正在運作的是什麼。</p>
+        <button type="button" class="bridge-go" id="bridgeGo">看我的真實報告 →</button>
+    </div>
+    <?php endif; ?>
+
+    <!-- ══════ 第三幕：真實報告（質疑＋撕完才顯示） ══════ -->
+    <div class="report-reveal<?= empty($stereotypes) ? ' revealed' : '' ?>" id="reportReveal">
+
+    <?php if (!empty($stereotypes)): ?>
+    <!-- 留下標籤的「翻面重新詮釋」：JS 依使用者判斷結果填入 -->
+    <section class="reframe-section" id="reframeSection" hidden>
+        <h2 class="reframe-title">你留下的標籤，其實是這樣運作的</h2>
+        <p class="section-hint reframe-sub" id="reframeSub"></p>
+        <div class="reframe-list" id="reframeList"></div>
+        <p class="reframe-note">
+            這些不是缺陷，是你認知功能的「副作用」。看懂機制，標籤就再也綁不住你。
+        </p>
+    </section>
+    <?php endif; ?>
+
     <!-- ────── 報告主體：左欄(類型+分數) + 右欄(功能介紹) ────── -->
     <div class="result-layout">
         <div class="result-left">
@@ -161,6 +232,7 @@ $is_guest = empty($_SESSION['user_id']);
 
     <!-- 重做測驗的小提示 -->
     <p class="redo-link"><a href="assessment.php">想再做一次測驗？</a></p>
+    </div><!-- /.report-reveal -->
 </div>
 
 <script>
@@ -172,4 +244,5 @@ $is_guest = empty($_SESSION['user_id']);
         history:      <?= json_encode($loaded_history, JSON_UNESCAPED_UNICODE) ?>
     };
 </script>
+<script src="assets/js/teardown.js"></script>
 <script src="assets/js/chat.js"></script>

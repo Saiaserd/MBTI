@@ -12,6 +12,354 @@ body {
     overflow: visible !important;
 }
 
+/* ══════════════════════════════════════════════
+   撕標籤階段（報告頁第一幕）
+   ══════════════════════════════════════════════ */
+.teardown {
+    min-height: calc(100vh - var(--topnav-height, 64px));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.teardown.teardown-hide {
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+}
+.teardown-inner {
+    max-width: 720px;
+    width: 100%;
+}
+.teardown-eyebrow {
+    margin: 0 0 10px;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: #9ca3af;
+}
+.teardown-title {
+    margin: 0 0 16px;
+    font-size: 28px;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1.4;
+}
+.teardown-sub {
+    margin: 0 0 40px;
+    font-size: 15px;
+    color: #6b7280;
+    line-height: 1.8;
+}
+.teardown-sub strong { color: #4f46e5; }
+
+/* ── 卡片堆：一次判斷一張標籤 ── */
+.judge-deck {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    height: 230px;
+    margin: 0 auto 28px;
+}
+.judge-card {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 28px 24px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 20px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform-origin: center bottom;
+}
+.judge-quote {
+    font-size: 14px;
+    color: #9ca3af;
+    letter-spacing: 1px;
+}
+.judge-label {
+    font-size: 34px;
+    font-weight: 800;
+    color: #1f2937;
+    line-height: 1.2;
+}
+.judge-hint {
+    font-size: 13px;
+    color: #c0c5ce;
+    margin-top: 4px;
+}
+/* 撕掉：往左旋轉飛走 */
+.judge-card.judged-rip {
+    animation: cardRip 0.5s cubic-bezier(0.55, 0.05, 0.7, 0.2) forwards;
+}
+@keyframes cardRip {
+    0%   { opacity: 1; transform: translate(0,0) rotate(0); }
+    100% { opacity: 0; transform: translate(-160px, 220px) rotate(-32deg); }
+}
+/* 留著：往右上輕輕彈走 */
+.judge-card.judged-keep {
+    animation: cardKeep 0.5s cubic-bezier(0.34, 1.2, 0.64, 1) forwards;
+}
+@keyframes cardKeep {
+    0%   { opacity: 1; transform: translate(0,0) rotate(0)    scale(1); }
+    100% { opacity: 0; transform: translate(140px,-60px) rotate(12deg) scale(0.85); }
+}
+
+/* 判斷按鈕 */
+.judge-actions {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+.judge-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.judge-btn:hover { transform: translateY(-2px); }
+.judge-btn-icon {
+    display: inline-flex;
+    width: 22px; height: 22px;
+    align-items: center; justify-content: center;
+    border-radius: 50%;
+    font-size: 13px;
+}
+.judge-rip {
+    background: #fff;
+    color: #ef4444;
+    border-color: #fca5a5;
+}
+.judge-rip:hover { background: #fef2f2; box-shadow: 0 6px 18px rgba(239,68,68,0.2); }
+.judge-rip .judge-btn-icon { background: #fee2e2; }
+.judge-keep {
+    background: #4f46e5;
+    color: #fff;
+}
+.judge-keep:hover { background: #4338ca; box-shadow: 0 6px 18px rgba(79,70,229,0.35); }
+.judge-keep .judge-btn-icon { background: rgba(255,255,255,0.25); }
+
+/* 進度 */
+.teardown-progress { margin-bottom: 22px; }
+.teardown-bar {
+    max-width: 320px;
+    height: 8px;
+    margin: 0 auto 8px;
+    background: #e5e7eb;
+    border-radius: 999px;
+    overflow: hidden;
+}
+.teardown-bar-fill {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #4f46e5, #7c3aed);
+    border-radius: 999px;
+    transition: width 0.4s ease;
+}
+.teardown-count {
+    margin: 0;
+    font-size: 13px;
+    color: #9ca3af;
+}
+.teardown-skip {
+    margin: 8px 0 0;
+    font-size: 13px;
+}
+.teardown-skip a {
+    color: #9ca3af;
+    text-decoration: underline;
+}
+.teardown-skip a:hover { color: #4f46e5; }
+
+/* 過場句 */
+.teardown-bridge {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.96);
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s ease;
+}
+.teardown-bridge.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.teardown-bridge p {
+    margin: 0;
+    font-size: 20px;
+    color: #6b7280;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: bridgeIn 0.6s ease forwards;
+}
+.teardown-bridge .bridge-line1   { animation-delay: 0.2s; }
+.teardown-bridge p.bridge-strong {
+    font-size: 30px;
+    font-weight: 800;
+    color: #1f2937;
+    margin: 4px 0;
+    animation-delay: 0.7s;
+}
+.teardown-bridge .bridge-line3   { animation-delay: 1.2s; }
+@keyframes bridgeIn {
+    to { opacity: 1; transform: translateY(0); }
+}
+.bridge-go {
+    margin-top: 22px;
+    padding: 13px 30px;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: bridgeIn 0.6s ease 1.8s forwards;
+    box-shadow: 0 8px 24px rgba(79, 70, 229, 0.35);
+    transition: transform 0.15s ease;
+}
+.bridge-go:hover { transform: translateY(-2px); }
+
+/* ── 第三幕：留下標籤的翻面重新詮釋 ── */
+.reframe-section {
+    background: linear-gradient(180deg, #faf5ff 0%, #fff 100%);
+    border: 1px solid #e9d5ff;
+    border-radius: 18px;
+    padding: 30px 26px;
+    margin-bottom: 28px;
+}
+.reframe-title {
+    margin: 0 0 6px;
+    font-size: 21px;
+    font-weight: 800;
+    color: #5b21b6;
+}
+.reframe-sub { color: #6b7280; }
+.reframe-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 18px;
+}
+/* 翻牌卡 */
+.reframe-card {
+    position: relative;
+    height: 150px;
+    perspective: 1000px;
+    cursor: pointer;
+    outline: none;
+}
+.reframe-face {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 16px;
+    border-radius: 14px;
+    backface-visibility: hidden;
+    transition: transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
+    text-align: center;
+}
+.reframe-front {
+    background: #fff;
+    border: 1.5px dashed #c4b5fd;
+    transform: rotateY(0deg);
+}
+.reframe-card.flipped .reframe-front { transform: rotateY(180deg); }
+.reframe-back {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: #fff;
+    transform: rotateY(-180deg);
+}
+.reframe-card.flipped .reframe-back { transform: rotateY(0deg); }
+.reframe-card:focus-visible .reframe-front { box-shadow: 0 0 0 3px #c4b5fd; }
+.reframe-label {
+    font-size: 22px;
+    font-weight: 800;
+    color: #1f2937;
+}
+.reframe-flip-hint {
+    font-size: 12px;
+    color: #a78bda;
+}
+.reframe-fn {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    background: rgba(255, 255, 255, 0.22);
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+.reframe-truth {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: #fff;
+}
+.reframe-note {
+    margin: 18px 0 0;
+    font-size: 13px;
+    color: #7c5cbf;
+    line-height: 1.7;
+}
+
+/* 報告區塊：質疑＋撕完才浮現 */
+.report-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+}
+.report-reveal.revealed {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    height: auto;
+    overflow: visible;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+@media (max-width: 640px) {
+    .teardown-title { font-size: 22px; }
+    .judge-deck { max-width: 300px; height: 200px; }
+    .judge-label { font-size: 28px; }
+    .judge-btn { font-size: 14px; padding: 12px 18px; }
+    .teardown-bridge p { font-size: 17px; }
+    .teardown-bridge p.bridge-strong { font-size: 24px; }
+    .reframe-list { grid-template-columns: 1fr 1fr; }
+}
+
 .result-container {
     max-width: 1180px;
     margin: 40px auto 80px;
