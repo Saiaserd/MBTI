@@ -8,7 +8,8 @@ $page_title = '介紹主頁';
 $page_css   = ['assets/css/wikiCSS.css', 'assets/css/floatChatCSS.css'];
 
 // 把 16 型描述傳到前端，讓 AI 可以讀到頁面實際內容
-$types = require __DIR__ . '/data/mbti_types.php';
+require __DIR__ . '/includes/content_repo.php';
+$types = get_mbti_types();
 $types_for_js = [];
 foreach ($types as $key => $val) {
     $types_for_js[strtoupper($key)] = [

@@ -1,10 +1,12 @@
 <?php
 /**
- * 計分邏輯驗收測試（純 CLI，不需 DB / session）
+ * 計分邏輯驗收測試（CLI）
  * 執行： php tests/scoring_test.php
+ * 註：題庫與 16 型資料已改存 MySQL，本測試會連 DB（需先 import 內容表）。
  */
 
 require_once __DIR__ . '/../includes/scoring.php';
+require_once __DIR__ . '/../includes/content_repo.php';
 
 $pass = 0;
 $fail = 0;
@@ -48,26 +50,26 @@ check('型別', 'ESFP', stack_to_type($stackC));
 echo "案例 D（計分邊界：×4、滿分100）\n";
 // 全填「非常同意」(5) → 每維 = 5*4*5題 = 100
 $allFive = [];
-foreach (require __DIR__ . '/../data/questions.php' as $q) $allFive[$q['id']] = 5;
+foreach (get_questions() as $q) $allFive[$q['id']] = 5;
 $scoreHi = aggregate_scores($allFive);
 check('全 5 → Ni=100', 100, $scoreHi['Ni']);
 check('全 5 → Fe=100', 100, $scoreHi['Fe']);
 // 全填「不同意」(1) → 每維 = 1*4*5題 = 20
 $allOne = [];
-foreach (require __DIR__ . '/../data/questions.php' as $q) $allOne[$q['id']] = 1;
+foreach (get_questions() as $q) $allOne[$q['id']] = 1;
 $scoreLo = aggregate_scores($allOne);
 check('全 1 → Ni=20', 20, $scoreLo['Ni']);
 
 echo "案例 E（題庫結構：40 題、每維 5 題）\n";
-$qs = require __DIR__ . '/../data/questions.php';
+$qs = get_questions();
 check('總題數 40', 40, count($qs));
 $counts = [];
 foreach ($qs as $q) $counts[$q['function']] = ($counts[$q['function']] ?? 0) + 1;
 check('每維題數皆為 5', '5 5 5 5 5 5 5 5', implode(' ', array_values($counts)));
 
-echo "案例 F（堆疊與 mbti_types.php 的 functions 完全一致）\n";
+echo "案例 F（堆疊與 mbti_types 的 functions 完全一致）\n";
 // 用各型主導+輔助最高的分數，重建後比對官方堆疊
-$types = require __DIR__ . '/../data/mbti_types.php';
+$types = get_mbti_types();
 $mismatch = 0;
 foreach ($types as $key => $info) {
     $official = $info['functions'];

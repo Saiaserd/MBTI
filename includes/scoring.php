@@ -16,7 +16,7 @@
  *     不可依賴 arsort 等受插入順序影響的排序。
  */
 
-require_once __DIR__ . '/../data/questions.php';
+require_once __DIR__ . '/content_repo.php';
 
 /** 八個功能的固定屬性表 ───────────────────────────── */
 
@@ -83,7 +83,7 @@ function pick_highest(array $candidates): string {
  * @return array          ['Ni' => 80, 'Ne' => 60, ...]（每維 20~100）
  */
 function aggregate_scores(array $answers): array {
-    $questions = require __DIR__ . '/../data/questions.php';
+    $questions = get_questions();
 
     $totals = ['Ni' => 0, 'Ne' => 0, 'Si' => 0, 'Se' => 0,
                'Ti' => 0, 'Te' => 0, 'Fi' => 0, 'Fe' => 0];
@@ -170,7 +170,7 @@ function build_assessment_report(array $answers): array {
     $stack  = build_function_stack($scores);
     $type   = stack_to_type($stack);
 
-    $types = require __DIR__ . '/../data/mbti_types.php';
+    $types = get_mbti_types();
     $key   = strtolower($type);
 
     return [

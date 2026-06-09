@@ -6,11 +6,12 @@
  * 進入頁傳進來的變數：
  *   $type → 小寫 4 字母 MBTI 代碼，例如 'enfj'
  *
- * 從 data/mbti_types.php 撈出該型號的：
+ * 透過 content_repo 的 get_mbti_types() 撈出該型號的：
  *   functions（八維順序陣列）、desc（介紹文字）、prev/next（上一/下一型號）
  */
 
-$types = require __DIR__ . '/../data/mbti_types.php';
+require_once __DIR__ . '/../includes/content_repo.php';
+$types = get_mbti_types();
 
 // 防呆：給了奇怪的 type 直接 404，不要 PHP warning
 if (!isset($types[$type])) {

@@ -40,7 +40,8 @@ $stack  = $assessment['stack'];
 $type   = $assessment['type'];
 
 // 該型的「世界刻板標籤」——讓使用者進報告前先親手撕掉
-$all_stereotypes = require __DIR__ . '/../data/stereotypes.php';
+require_once __DIR__ . '/../includes/content_repo.php';
+$all_stereotypes = get_stereotypes();
 $stereotypes     = $all_stereotypes[strtolower($type)] ?? [];
 
 // 人格分組 → CSS class（決定類型卡顏色）

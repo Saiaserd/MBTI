@@ -2,7 +2,7 @@
 /**
  * 八維測驗 HTML 模板
  * 需要的變數：
- *   $questions  → 40 題的陣列（從 data/questions.php 來）
+ *   $questions  → 40 題的陣列（從 content_repo 的 get_questions() 來）
  *
  * 設計：
  *   - 把 40 題切成數頁，每頁 10 題（避免一次顯示太長嚇跑使用者）

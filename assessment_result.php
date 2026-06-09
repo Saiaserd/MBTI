@@ -12,6 +12,7 @@
  *   - 訪客存取 ?xxx → 拒絕（沒登入沒紀錄可看）
  */
 require_once __DIR__ . '/includes/bootstrap.php';
+require_once __DIR__ . '/includes/content_repo.php';
 
 $assessment      = null;
 $chat_session_id = null;
@@ -125,7 +126,7 @@ function load_assessment_from_db(mysqli $conn, string $user_id, int $assessment_
     $row = $stmt->get_result()->fetch_assoc();
     if (!$row) return null;
 
-    $types = require __DIR__ . '/data/mbti_types.php';
+    $types = get_mbti_types();
     $key   = strtolower($row['mbti_type']);
 
     return [

@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // ---------- 1. 收答案：POST 裡所有 q1~q40 ----------
-$questions = require __DIR__ . '/../data/questions.php';
+$questions = get_questions();
 $answers   = [];
 foreach ($questions as $q) {
     $key = 'q' . $q['id'];
