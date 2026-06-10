@@ -21,7 +21,6 @@
         <li><a href="seizure.php"><i class="user-icon">📚</i><span>榮格介紹</span></a></li>
         <li><a href="log.php"><i class="user-icon">⌛</i><span>紀錄</span></a></li>
         <li><a href="user.php"><i class="user-icon">👤</i><span>帳號</span></a></li>
-        <li><a href="survey.php"><i class="user-icon">🧾</i><span>意見回饋</span></a></li>
     </ul>
 
     <!-- 漢堡按鈕：只在窄畫面顯示，點擊會 toggle .open 來展開選單 -->
